@@ -98,7 +98,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
                     const fileInputData = document.getElementById(fileInput.getAttribute('data-controls'));
                     if(!!fileInputData){
                         fileInputData.addEventListener('change', e => {
-                            image.src = e.currentTarget.value;
+                            try {
+                                const logo = JSON.parse(e.currentTarget.value);
+                                image.src = logo?.data;
+                                image.alt = logo?.name;
+                            }catch(ex){};
                         });
                     }
 
@@ -116,7 +120,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                                 const imageReader = new FileReader();
                                 imageReader.addEventListener("load", (e) => {
                                     if(!!fileInputData){
-                                        fileInputData.value = e.currentTarget.result;
+                                        fileInputData.value = JSON.stringify({name: files[i].name, data: e.currentTarget.result});
                                         fileInputData.dispatchEvent(new Event('change'));
                                     }
                                 });
