@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="no-js">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>10 aspetos críticos</title>
+        <meta name="description" content="Lista de verificação &quot;10 aspetos críticos de acessibilidade funcional&quot;">
+
+        <link rel="stylesheet" href="assets/styles/styles.css" type="text/css" media="all">
+
+        <script type="module" src="./assets/scripts/TestGroupComponent.js"></script>
+        <script type="module" src="./assets/scripts/TestInfoComponent.js"></script>
+        <script type="module" src="./assets/scripts/ModalDialog.js"></script>
+        <script type="module">
+            
+        </script>
+        <script type="module" src="assets/scripts/Main.js"></script>
+    </head>
+
+    <body class="_custom-layout">
+        <main class="root">
+            <a href="#checklist" class="visually-hidden-focusable">Ir para o conteúdo</a>
+
+            <form id="checklist" action="">
+                <div>
+                    <input type="hidden" id="logoFileSrc" name="logoFileSrc" value="">
+                    <input type="file" id="logoFile" data-controls="logoFileSrc" accept="image/*" hidden>
+                    <button type="button" id="logoFileButton" data-controls="logoFile" class="logo-update-btn" title="Alterar logótipo do relatório" aria-label="Alterar logótipo do relatório">
+                        <img class="logo" src="assets/images/logo.svg" alt="Logótipo do relatório" style="max-width: 235px; width: 100%; height: auto;">
+                    </button>
+                </div>
+
+                <div class="page">
+                    <h1>Checklist "10 aspetos funcionais"</h1>
+                    <p class="mb-3 mt-0">
+                        Conformidade e repositório de evidências
+                    </p>
+
+                    <div class="form-floating field">
+                        <input class="form-control" id="site-designation" name="site-designation" type="text" required title="Designação do sítio web">
+                    </div>
+
+                    <div class="form-floating field">
+                        <input class="form-control" id="site-url" name="site-url" type="url" required title="Endereço do sítio web">
+                    </div>
+
+                    <div class="form-floating field">
+                        <input class="form-control" id="site-entity" name="site-entity" type="text" required title="Entidade">
+                    </div>
+
+                    <div class="form-floating field">
+                        <input class="form-control" id="site-evaluation-date" name="site-evaluation-date" type="date" required title="Data da análise">
+                    </div>
+                </div>
+            </form>
+        </main>
+    </body>
+
+</html>
