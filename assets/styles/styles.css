@@ -64,7 +64,7 @@ body .logo-update-btn {
     transition-timing-function: ease-in-out;
 }
 
-body .logo-update-btn:is(.highlight, :hover, :focus-visible, :active){
+body .logo-update-btn:is(.highlight, :hover, :focus, :active){
     border-color: var(--main-color);
     box-shadow: 0 0 5px 0px var(--main-color);
 }
@@ -372,7 +372,7 @@ fieldset{
     border-radius: 5px;
     transition: all 0.2s ease-in-out;
 }
-.file-previews button.thumbnail-wrapper:is(:hover, :focus-visible, :active){
+.file-previews button.thumbnail-wrapper:is(:hover, :focus, :active){
     box-shadow: 0 0 10px 2px #C1C1C1;
 }
 .file-previews img{
@@ -382,7 +382,7 @@ fieldset{
     transform: scale(1);
     transition: all 0.2s ease-in-out;
 }
-.file-previews button.thumbnail-wrapper:is(:hover, :focus-visible, :active) img{
+.file-previews button.thumbnail-wrapper:is(:hover, :focus, :active) img{
     transform: scale(1.025);
 }
 
@@ -477,7 +477,7 @@ fieldset{
 .test-result-option input[type=radio]:not(:disabled) + label {
     cursor: pointer;
 }
-.test-result-option input[type=radio]:focus-visible + label,
+.test-result-option input[type=radio]:focus + label,
 .test-result-option input[type=radio]:hover:not(:checked) + label {
     outline: 2px solid var(--border-active-color);
 }
@@ -621,7 +621,7 @@ fieldset{
     cursor: pointer;
 }
 
-.test-results-facts-browse-btn:is(:hover, :active, :focus-visible){
+.test-results-facts-browse-btn:is(:hover, :active, :focus){
     color: var(--active-text-color, white);
     background: var(--active-background-color, #41228e);
 }

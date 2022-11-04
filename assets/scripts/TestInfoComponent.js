@@ -97,7 +97,7 @@ class TestInfo extends HTMLElement {
             if (!!fileInputData) {
                 fileInputData.addEventListener('change', e => {
                     try {
-                        previewContainer.innerHTML = "";
+                        previewContainer.textContent = "";
 
                         const images = JSON.parse(e.currentTarget.value);
                         if (images.length > 0) {
