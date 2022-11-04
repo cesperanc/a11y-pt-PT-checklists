@@ -23,7 +23,7 @@
         <main class="root">
             <a href="#checklist" class="visually-hidden-focusable">Ir para o conteúdo</a>
 
-            <form id="checklist" action="">
+            <form id="checklist" method="dialog" onsubmit="window.print()">
                 <div>
                     <input type="hidden" id="logoFileSrc" name="logoFileSrc" value="">
                     <input type="file" id="logoFile" data-controls="logoFileSrc" accept="image/*" hidden>
@@ -53,6 +53,9 @@
                     <div class="form-floating field">
                         <input class="form-control" id="site-evaluation-date" name="site-evaluation-date" type="date" required title="Data da análise">
                     </div>
+
+
+                    <input type="submit" value="Imprimir" style="visibility: hidden;">
                 </div>
             </form>
         </main>
