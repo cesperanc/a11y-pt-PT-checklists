@@ -29,8 +29,46 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
+    const updateEvaluationResultsFactory = ()=>{
+        const resultsContainer = document.getElementById('evaluationResults');
+        const checkList = document.getElementById('checklistTests');
+
+        return (tests)=>{
+            if(!resultsContainer || !checkList || !Array.isArray(tests)) return;
+
+            resultsContainer.textContent = '';
+
+            const groupsUl = document.createElement('ul');
+            tests.forEach(group => {
+                const groupLi = document.createElement('li');
+
+                const groupLiA = document.createElement('a');
+                groupLiA.setAttribute('href', `#test-group-${group.ID}`);
+                groupLiA.innerText = group.fullName??'';
+                groupLi.appendChild(groupLiA);
+
+                const testUl = document.createElement('ul');
+                if(!!group.tests && Array.isArray(group.tests)){
+                    group.tests.forEach(test=>{
+                        const testUlLi = document.createElement('li');
+                        const testUlLiA = document.createElement('a');
+                        testUlLiA.setAttribute('href', `#test-g${group.ID}-t${test.ID}`);
+                        testUlLiA.innerText = test.fullName??'';
+                        testUlLi.appendChild(testUlLiA);
+                        testUl.appendChild(testUlLi);
+                    });
+                }
+                groupLi.appendChild(testUl);
+
+                groupsUl.appendChild(groupLi);
+            });
+            resultsContainer.replaceChildren(groupsUl);
+        };
+    }
+
     const loadChecklist = (tests)=>{
         const checkList = document.getElementById('checklistTests');
+        const updateEvaluationResults = updateEvaluationResultsFactory();
 
         if(!!checkList && Array.isArray(tests)){
             checkList.textContent = '';
@@ -158,9 +196,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 }
             }
             
+            updateEvaluationResults(tests);
         }
     };
 
     loadChecklist(CheckListTests||null);
+
     
 });
