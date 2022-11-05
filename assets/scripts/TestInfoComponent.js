@@ -22,12 +22,12 @@ class TestInfo extends HTMLElement {
         template.innerHTML = Object.keys(placeholders).reduce((prev, current) => prev.replaceAll(placeholders[current], this.getAttribute(`data-${current}`) ?? ''), `
             <div class="test-info">
                 <div class="test-group-name"><slot name="test-group-name"></slot></div>
-                <div class="test-name"><slot name="test-name"></slot></div>
+                <div class="test-name" id="test-name_\${groupId}_test_\${testId}"><slot name="test-name"></slot></div>
                 <div class="test-description"><slot name="test-description"></slot></div>
                 <div class="form-group-wrapper">
                     <div class="form-group test-results" data-empty-message="O teste não foi executado">
                         <fieldset>
-                            <legend class="test-results-legend"><h4 class="test-results-legend test-results-label">Resultado do teste</h4></legend>
+                            <legend class="test-results-legend"><h4 class="test-results-legend test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Resultado do teste</h4></legend>
                             <div class="test-results-wrapper">
                                 <div class="test-result-option test-result-positive">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" required><label for="testResult_group_\${groupId}_test_\${testId}_P">Positivo</label>
@@ -45,7 +45,7 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-facts">
                         <div class="file-previews-input-wrapper">
-                            <label class="block" for="testFacts_group_\${groupId}_test_\${testId}"><h4 class="test-results-facts-labels test-results-label">Evidências</h4></label>
+                            <label class="block" for="testFacts_group_\${groupId}_test_\${testId}"><h4 class="test-results-facts-labels test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Evidências</h4></label>
                             <input type="file" id="testFacts_group_\${groupId}_test_\${testId}" data-controls="testFacts_group_\${groupId}_test_\${testId}_data" multiple accept="image/*">
                             <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden>Selecionar evidências</button>
                             <input type="hidden" id="testFacts_group_\${groupId}_test_\${testId}_data" name="testFacts['group_\${groupId}']['test_\${testId}']" value="">
@@ -55,7 +55,7 @@ class TestInfo extends HTMLElement {
                 </div>
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-notes">
-                        <label class="block" for="testNotes_group_\${groupId}_test_\${testId}"><h4 class="test-results-notes test-results-label">Notas</h4></label>
+                        <label class="block" for="testNotes_group_\${groupId}_test_\${testId}"><h4 class="test-results-notes test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Notas</h4></label>
                         <textarea resizable class="block form-control no-print-if-js" data-controls="testNotes_group_\${groupId}_test_\${testId}_preview" id="testNotes_group_\${groupId}_test_\${testId}" name="testNotes['group_\${groupId}']['test_\${testId}']"></textarea>
                         <div id="testNotes_group_\${groupId}_test_\${testId}_preview" class="test-result-notes-preview no-print-if-no-js show-only-when-printing" role="presentation" data-empty-message="Não foram adicionadas notas"></div>
                     </div>

@@ -252,22 +252,25 @@ textarea {
     position: absolute;
     bottom: 0.5rem;
     left: 0;
+    right: 0;
     top: auto;
     pointer-events: none;
     transform-origin: 0 0;
-    transition: opacity var(--fast-transition) ease-in-out, bottom var(--fast-transition) ease-in-out;
-    opacity: 0.75;
+    transition: color var(--fast-transition) ease-in-out, font-weight var(--fast-transition) ease-in-out, bottom var(--fast-transition) ease-in-out;
     display: block;
-    font-weight: 600;
+    font-weight: normal;
     white-space: nowrap;
     overflow: hidden;
     max-width: 100%;
     text-overflow: ellipsis;
+    color: rgb(117, 117, 117);
+    background-color: white;
 }
 
 .form-floating.as-label label {
-    opacity: 1;
     bottom: 2.2rem;
+    color: var(--main-color);
+    font-weight: bold;
 }
 
 
@@ -285,14 +288,13 @@ textarea {
 }
 
 .form-floating > .form-control::placeholder,
-.form-floating > .form-control::-webkit-datetime-edit{
-    transition: opacity 0.3s ease-in-out;
-    opacity: 1;
+.form-floating > .form-control[type="date"]::-webkit-datetime-edit {
+    transition: color 0.3s ease-in-out;
 }
 .form-floating:not(.as-label) > .form-control::placeholder,
 .form-floating:not(.as-label) > .form-control::-webkit-datetime-edit {
-    opacity: 0;
-    transition: opacity 0s;
+    color: transparent;
+    transition: none;
 }
 
 
@@ -448,6 +450,7 @@ fieldset{
     margin: -1px;
     padding: 0;
     border: 0 none;
+    pointer-events: none;
 }
 .visually-hidden-focusable:focus, 
 .visually-hidden-focusable:focus-within {
