@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const label = document.createElement('label');
             label.setAttribute('for', el.id);
             label.setAttribute('tabindex', '-1');
+            label.setAttribute('role', 'presentation');
             label.classList.add('form-control-label', 'foc-item', 'foc-item-required');
             label.innerHTML = el.getAttribute('title');
             el.addEventListener('focus', ()=>{
