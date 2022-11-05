@@ -27,16 +27,19 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-results" data-empty-message="O teste não foi executado">
                         <fieldset>
-                            <legend class="test-results-legend"><h4 class="test-results-legend test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Resultado do teste</h4></legend>
-                            <div class="test-results-wrapper">
-                                <div class="test-result-option test-result-positive">
-                                    <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" required><label for="testResult_group_\${groupId}_test_\${testId}_P">Positivo</label>
+                            <legend class="test-results-legend" aria-labelledby="test-name_\${groupId}_test_\${testId}_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_label" class="test-results-legend test-results-label">Resultado do teste</h4></legend>
+                            <div class="test-results-wrapper" r_ole="radiogroup" a_ria-labelledby="test-name_\${groupId}_test_\${testId}_label test-name_\${groupId}_test_\${testId}">
+                                <div class="test-result-option test-result-positive" role="presentation">
+                                    <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_P">
+                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_P" for="testResult_group_\${groupId}_test_\${testId}_P" role="presentation" tabindex="-1">Positivo</label>
                                 </div>
-                                <div class="test-result-option test-result-negative">
-                                    <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_N" name="testResult['group_\${groupId}']['test_\${testId}']" value="N" required><label for="testResult_group_\${groupId}_test_\${testId}_N">Negativo</label>
+                                <div class="test-result-option test-result-negative" role="presentation">
+                                    <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_N" name="testResult['group_\${groupId}']['test_\${testId}']" value="N" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_N">
+                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_N"for="testResult_group_\${groupId}_test_\${testId}_N" role="presentation" tabindex="-1">Negativo</label>
                                 </div>
-                                <div class="test-result-option test-result-not-applicable">
-                                    <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_NA" name="testResult['group_\${groupId}']['test_\${testId}']" value="NA" required><label for="testResult_group_\${groupId}_test_\${testId}_NA">Não aplicável</label>
+                                <div class="test-result-option test-result-not-applicable" role="presentation">
+                                    <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_NA" name="testResult['group_\${groupId}']['test_\${testId}']" value="NA" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_NA">
+                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_NA" for="testResult_group_\${groupId}_test_\${testId}_NA" role="presentation" tabindex="-1">Não aplicável</label>
                                 </div>
                             </div>
                         </fieldset>
@@ -47,7 +50,7 @@ class TestInfo extends HTMLElement {
                         <div class="file-previews-input-wrapper">
                             <label class="block" for="testFacts_group_\${groupId}_test_\${testId}"><h4 class="test-results-facts-labels test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Evidências</h4></label>
                             <input type="file" id="testFacts_group_\${groupId}_test_\${testId}" data-controls="testFacts_group_\${groupId}_test_\${testId}_data" multiple accept="image/*">
-                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden>Selecionar evidências (capturas de ecrã)</button>
+                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden>Carregar imagens com as evidência</button>
                             <input type="hidden" id="testFacts_group_\${groupId}_test_\${testId}_data" name="testFacts['group_\${groupId}']['test_\${testId}']" value="">
                         </div>
                         <div class="file-previews" data-empty-message="Não foram apresentadas evidências"></div>

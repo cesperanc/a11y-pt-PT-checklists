@@ -440,14 +440,19 @@ fieldset{
 }
 
 .visually-hidden,
-.visually-hidden-focusable:not(:focus):not(:focus-within),
-.test-result-option input[type=radio]{
+.visually-hidden-focusable:not(:focus):not(:focus-within){
     width: 1px;
     height: 1px;
     overflow: hidden;
     white-space: nowrap;
     clip-path: inset(50%);
     margin: -1px;
+    padding: 0;
+    border: 0 none;
+    pointer-events: none;
+}
+.test-result-option input[type=radio]{
+    clip-path: inset(50%);
     padding: 0;
     border: 0 none;
     pointer-events: none;
