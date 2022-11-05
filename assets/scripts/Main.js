@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const line = document.createElement('span');
             line.classList.add('form-control-line');
             el.after(line);
+
+            el.removeAttribute('title');
         }
     });
 
