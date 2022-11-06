@@ -266,6 +266,60 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
             
             updateEvaluationResults(tests);
+
+
+            const evaluationResultsPage = document.getElementById('evaluationResultsPage');
+            if(!!evaluationResultsPage){
+                const closeResultsBtn = document.createElement('button');
+                closeResultsBtn.setAttribute('id', 'closeResultsBtn');
+                closeResultsBtn.setAttribute('accesskey', 'm');
+                closeResultsBtn.setAttribute('type', 'button');
+                closeResultsBtn.setAttribute('aria-controls', evaluationResultsPage.id);
+                closeResultsBtn.setAttribute('aria-expanded', 'false');
+                closeResultsBtn.setAttribute('aria-label', 'Apresentar resultados');
+                closeResultsBtn.classList.add('close-button', 'no-print');
+                const closeResultsBtnIcon = document.createElement('span');
+                closeResultsBtnIcon.classList.add('burger-btn-icon');
+                for(let i=0; i<6; i++){
+                    closeResultsBtnIcon.appendChild(document.createElement('span'));
+                }
+                closeResultsBtn.appendChild(closeResultsBtnIcon);
+
+                closeResultsBtn.addEventListener('click', e=>{
+                    const closeResultsBtn = e.currentTarget;
+                    const show = e.currentTarget.getAttribute('aria-expanded')==='false';
+                    if(!!evaluationResultsPage){
+                        if(show && !!document.body.style.overflow){
+                            closeResultsBtn.dataset.bodyOverflow = document.body.style.overflow;
+                            document.body.style.overflow = 'hidden';
+                        }else if('bodyOverflow' in closeResultsBtn.dataset){
+                            document.body.style.overflow = closeResultsBtn.dataset.bodyOverflow;
+                            delete closeResultsBtn.dataset.bodyOverflow;
+                        }else{
+                            if(show){
+                                document.body.style.overflow = 'hidden';
+                            }else{
+                                document.body.style.removeProperty('overflow');
+                            }
+                        }
+                        evaluationResultsPage.classList.toggle('open', show);
+                        closeResultsBtn.setAttribute('aria-expanded', show);
+                        closeResultsBtn.setAttribute('aria-label', show?'Ocultar resultados':'Apresentar resultados');
+                    }
+                });
+
+                evaluationResultsPage.querySelectorAll('a.test-item, a.test-group').forEach(link=>{
+                    link.addEventListener('click', e=>{
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeResultsBtn.setAttribute('aria-expanded', 'true');
+                        closeResultsBtn.click();
+                        document.querySelector(e.currentTarget.getAttribute('href'))?.scrollIntoView();
+
+                    });
+                });
+                document.body.appendChild(closeResultsBtn);
+            }
         }
     };
 
