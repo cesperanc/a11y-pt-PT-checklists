@@ -42,22 +42,87 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
             resultsContainer.textContent = '';
 
+            const testResultsWrapper = document.createElement('span');
+            testResultsWrapper.classList.add('final-test-results-wrapper', 'test-results-labels');
+            testResultsWrapper.setAttribute('role', 'presentation');
+            testResultsWrapper.setAttribute('aria-hidden', true);
+
+            const testResultsContainer = document.createElement('span');
+            testResultsContainer.classList.add('test-results-container');
+
+            const testResults = document.querySelector('.test-info .form-group.test-results');
+            if(!!testResults){
+                testResults.querySelectorAll('input[type="radio"]').forEach(radio=>{
+                    const testResultItem = document.createElement('span');
+                    testResultItem.classList.add('test-result-item', `test-result-item-${radio.value}`);
+                    testResultItem.innerText = radio.value;
+                    testResultItem.setAttribute('aria-label', testResults.querySelector(`label[for="${radio.id}"]`)?.innerText||'');
+                    testResultItem.setAttribute('title', testResultItem.getAttribute('aria-label')||'');
+                    testResultsContainer.appendChild(testResultItem);
+                });
+            }
+            testResultsWrapper.appendChild(testResultsContainer);
+            resultsContainer.appendChild(testResultsWrapper);
+
             const groupsUl = document.createElement('ul');
+            groupsUl.classList.add('test-groups');
             tests.forEach(group => {
                 const groupLi = document.createElement('li');
-
                 const groupLiA = document.createElement('a');
                 groupLiA.setAttribute('href', `#test-group-${group.ID}`);
+                groupLiA.classList.add('test-group');
                 groupLiA.innerText = group.fullName??'';
                 groupLi.appendChild(groupLiA);
 
                 const testUl = document.createElement('ul');
+                testUl.classList.add('test-group-items');
                 if(!!group.tests && Array.isArray(group.tests)){
                     group.tests.forEach(test=>{
                         const testUlLi = document.createElement('li');
                         const testUlLiA = document.createElement('a');
                         testUlLiA.setAttribute('href', `#test-g${group.ID}-t${test.ID}`);
-                        testUlLiA.innerText = test.fullName??'';
+                        testUlLiA.classList.add('test-item');
+
+                        const testLabel = document.createElement('span');
+                        testLabel.classList.add('test-title');
+                        testLabel.innerText = test.fullName??'';
+                        testUlLiA.appendChild(testLabel);
+
+                        const testResultsWrapper = document.createElement('span');
+                        testResultsWrapper.classList.add('final-test-results-wrapper');
+
+                        const testResultsContainer = document.createElement('span');
+                        testResultsContainer.classList.add('test-results-container');
+                        testResultsContainer.setAttribute('role', 'radiogroup');
+                        testResultsContainer.setAttribute('aria-readonly', 'true');
+
+                        Array.from(document.querySelectorAll(`#test-g${group.ID}-t${test.ID}-wrapper .test-results input[type="radio"]`)).forEach((radio, index, radios)=>{
+                            const testResultItem = document.createElement('span');
+                            testResultItem.classList.add('test-result-item', `test-result-item-${radio.value}`);
+                            //testResultItem.innerText = radio.value;
+                            testResultItem.setAttribute('id', `${radio.id}_state_info`);
+                            testResultItem.setAttribute('aria-current', radio.checked);
+                            testResultItem.setAttribute('aria-hidden', !radio.checked);
+                            const label = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText||'';
+                            testResultItem.setAttribute('aria-label', `Resultado do teste: ${(label)}`);
+                            testResultItem.setAttribute('title', label);
+                            radio.addEventListener('change', (e)=>{
+                                testResultItem.setAttribute('aria-current', e.currentTarget.checked);
+                                testResultItem.setAttribute('aria-hidden', !radio.checked);
+                                radios.filter(radio=>radio.value!==e.currentTarget.value).forEach(radio=>{
+                                    const stateItem = document.getElementById(`${radio.id}_state_info`);
+                                    if(!!stateItem && stateItem.getAttribute('aria-current')!=radio.checked){
+                                        stateItem.setAttribute('aria-current', radio.checked);
+                                        stateItem.setAttribute('aria-hidden', !radio.checked);
+                                    }
+                                });
+                            });
+                            testResultsContainer.appendChild(testResultItem);
+                        });
+                        testResultsWrapper.appendChild(testResultsContainer);
+
+                        testUlLiA.appendChild(testResultsWrapper);
+
                         testUlLi.appendChild(testUlLiA);
                         testUl.appendChild(testUlLi);
                     });
@@ -66,7 +131,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
                 groupsUl.appendChild(groupLi);
             });
-            resultsContainer.replaceChildren(groupsUl);
+            resultsContainer.appendChild(groupsUl);
         };
     }
 
