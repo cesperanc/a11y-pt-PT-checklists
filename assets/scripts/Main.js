@@ -134,6 +134,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
             testResultsWrapper.setAttribute('role', 'presentation');
             testResultsWrapper.setAttribute('aria-hidden', true);
 
+            const testResultsTitle = document.createElement('h3');
+            testResultsTitle.innerText = 'Detalhes dos testes';
+            testResultsWrapper.appendChild(testResultsTitle);
+
             const testResultsContainer = document.createElement('span');
             testResultsContainer.classList.add('test-results-container');
 
@@ -149,10 +153,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 });
             }
             testResultsWrapper.appendChild(testResultsContainer);
-
-            const testResultsTitle = document.createElement('h3');
-            testResultsTitle.innerText = 'Detalhes dos testes';
-            testResultsWrapper.appendChild(testResultsTitle);
 
             resultsContainer.appendChild(testResultsWrapper);
 
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                                 <text y="50%" transform="translate(0, 2)">
                                     <tspan x="50%" text-anchor="middle" class="donut-percent">0%</tspan>   
                                 </text>
-                                <text y="60%" transform="translate(0, 4)">
+                                <text y="60%" transform="translate(0, 5)">
                                     <tspan x="50%" text-anchor="middle" class="donut-data"></tspan>   
                                 </text>
                             </g>

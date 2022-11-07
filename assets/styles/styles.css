@@ -39,7 +39,12 @@ body {
     background: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     position: relative;
-    width: 100%;
+}
+
+@media screen and (min-width: 210mm){
+    .page {
+        width: 100%;
+    }
 }
 
 .custom-layout .page::before {
@@ -864,7 +869,7 @@ test-info+test-info::before {
     display: block;
     border: var(--border);
     font-weight: bold;
-    padding: 1rem 0.5rem 1rem calc(4 * var(--box-size, 1rem) - var(--box-size, 1rem) / 4);
+    padding: 1rem 0.5rem 1rem calc(1 * var(--box-size, 1rem) - var(--box-size, 1rem) / 4);
 }
 
 #evaluationResults a.test-item {
@@ -875,13 +880,14 @@ test-info+test-info::before {
 
 #evaluationResults a.test-item .test-title {
     display: block;
-    margin-left: calc(2 * var(--box-size, 1rem) - var(--box-size, 1rem) / 2);
-    order: 2;
+    margin-left: var(--box-size, 1rem);
+    order: 1;
     padding: 0.5rem;
+    flex-grow: 1;
 }
 
 #evaluationResults a.test-item .final-test-results-wrapper {
-    order: 1;
+    order: 2;
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -918,10 +924,6 @@ test-info+test-info::before {
     box-sizing: border-box;
 }
 
-#evaluationResults .test-results-container .test-result-item:last-child {
-    border-right: var(--border);
-}
-
 #evaluationResults ul li ul li {
     border-bottom: var(--border);
 }
@@ -930,12 +932,17 @@ test-info+test-info::before {
     border-top: var(--border);
 }
 
+#evaluationResults .final-test-results-wrapper.test-results-labels .test-result-item:last-child,
 #evaluationResults ul li ul li {
     border-right: var(--border);
 }
 
 #evaluationResults ul li:last-child ul li:last-child {
     border-bottom: var(--border);
+}
+
+#evaluationResults a.test-item{
+    border-left: var(--border);
 }
 
 #evaluationResults a.test-item .test-results-container .test-result-item::after {
@@ -964,7 +971,7 @@ test-info+test-info::before {
     flex-direction: row;
 }
 #evaluationResults .final-test-results-wrapper.test-results-labels .test-results-container{
-    margin-right: calc(var(--box-size, 1rem) - var(--box-size, 1rem) / 4);
+    margin-left: auto;
 }
 
 .tests-results-summary-wrapper table{
@@ -988,6 +995,10 @@ test-info+test-info::before {
         background-color: transparent;
         color: var(--main-color);
     }
+
+    .test-result-facts {
+        display: block;
+    }
 }
 .tests-results-summary-wrapper table td,
 .tests-results-summary-wrapper table th{
@@ -1008,9 +1019,10 @@ test-info+test-info::before {
 
 
 .close-button {
+    --btnSize: 60px;
     position: fixed;
-    right: calc(15px + var(--scrollbar-width, 0));
-    bottom: 20px;
+    right: calc(5px + var(--scrollbar-width, 0));
+    bottom: 5px;
     z-index: 100;
     cursor: pointer;
     font-size: 1.25rem;
@@ -1019,15 +1031,25 @@ test-info+test-info::before {
     border: 1px solid transparent;
     margin: 0;
     padding: 0;
-    width: 120px;
-    height: 120px;
+    width: var(--btnSize, 60px);
+    height: var(--btnSize, 60px);
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 8px -3px #1c1c1c;
     transition: box-shadow 0.2s ease-in-out;
 }
 .close-button[aria-expanded="true"]{
-    right: calc(15px + 2 * var(--scrollbar-width, 0));
+    right: calc(5px + var(--scrollbar-width, 0));
+}
+@media screen and (min-width: 1250px) {
+    .close-button {
+        --btnSize: 80px;
+        right: calc(5px + var(--scrollbar-width, 0));
+        bottom: 20px;
+    }
+    .close-button[aria-expanded="true"]{
+        right: calc(5px + 2 * var(--scrollbar-width, 0));
+    }
 }
 
 .close-button .burger-btn-icon {
@@ -1035,15 +1057,13 @@ test-info+test-info::before {
     position: relative;
 }
 .close-button .burger-btn-icon .donut-percent{
-    font-size: 0.5em;
+    font-size: 0.55em;
     line-height: 1;
-    transform: translateY(0.5em);
     font-weight: bold;
 }
 .close-button .burger-btn-icon .donut-data{
-    font-size: 0.18em;
+    font-size: 0.23em;
     line-height: 1;
-    transform: translateY(0.5em);
     text-align: center;
     text-anchor: middle;
     color: #666;

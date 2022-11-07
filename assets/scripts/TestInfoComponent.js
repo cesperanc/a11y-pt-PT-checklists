@@ -59,7 +59,7 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-notes">
                         <label class="block" for="testNotes_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_notes_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_notes_label" class="test-results-notes test-results-label">Notas</h4></label>
-                        <textarea resizable class="block form-control no-print-if-js" data-controls="testNotes_group_\${groupId}_test_\${testId}_preview" id="testNotes_group_\${groupId}_test_\${testId}" name="testNotes['group_\${groupId}']['test_\${testId}']"></textarea>
+                        <textarea resizable class="block form-control no-print-if-js" data-controls="testNotes_group_\${groupId}_test_\${testId}_preview" id="testNotes_group_\${groupId}_test_\${testId}" name="testNotes['group_\${groupId}']['test_\${testId}']" rows="4"></textarea>
                         <div id="testNotes_group_\${groupId}_test_\${testId}_preview" class="test-result-notes-preview no-print-if-no-js show-only-when-printing" role="presentation" data-empty-message="Não foram adicionadas notas"></div>
                     </div>
                 </div>
