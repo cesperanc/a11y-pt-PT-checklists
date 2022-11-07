@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const resultsContainer = document.getElementById('evaluationResults');
         const checkList = document.getElementById('checklistTests');
         const evaluationResultsPage = document.getElementById('evaluationResultsPage');
+        const closeResultsBtn = document.getElementById('closeResultsBtn');
+        const closeResultsBtnPercentage = closeResultsBtn?.querySelector('.donut-percent');
+        const closeResultsBtnData = closeResultsBtn?.querySelector('.donut-data');
 
         return (tests)=>{
             if(!resultsContainer || !checkList || !Array.isArray(tests)) return;
@@ -112,6 +115,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
                 if(!!evaluationResultsPage){
                     evaluationResultsPage.style.setProperty('--progress', `${completedPercentage}%`);
+                }
+
+                if(!!closeResultsBtn){
+                    closeResultsBtn.style.setProperty('--progress', `${completedPercentage}`);
+                    console.log(closeResultsBtnPercentage);
+                    if(!!closeResultsBtnPercentage){
+                        closeResultsBtnPercentage.innerHTML = `${completedPercentage}%`;
+                    }
+                    if(!!closeResultsBtnData){
+                        closeResultsBtnData.innerHTML = `${((numberOfTests-numberOfUntestedTests))}/${((numberOfTests))} testes`;
+                    }
                 }
             };
             updateSummary();
@@ -218,7 +232,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     const loadChecklist = (tests)=>{
         const checkList = document.getElementById('checklistTests');
-        const updateEvaluationResults = updateEvaluationResultsFactory();
 
         if(!!checkList && Array.isArray(tests)){
             checkList.textContent = '';
@@ -344,9 +357,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
                     }, false);
                 }
             }
-            
-            updateEvaluationResults(tests);
-
 
             const evaluationResultsPage = document.getElementById('evaluationResultsPage');
             if(!!evaluationResultsPage){
@@ -361,9 +371,36 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 closeResultsBtn.classList.add('close-button', 'no-print');
                 const closeResultsBtnIcon = document.createElement('span');
                 closeResultsBtnIcon.classList.add('burger-btn-icon');
-                for(let i=0; i<6; i++){
-                    closeResultsBtnIcon.appendChild(document.createElement('span'));
-                }
+                // for(let i=0; i<6; i++){
+                //     closeResultsBtnIcon.appendChild(document.createElement('span'));
+                // }
+
+                closeResultsBtnIcon.innerHTML = `
+                    <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut" role="img" aria-label="Percentagem de conclusão">
+                        <circle class="donut-hole" cx="20" cy="20" r="19" fill="#fff"></circle>
+                        <g class="donut-text-wrapper">
+                            <g class="donut-text">
+                                <text y="50%" transform="translate(0, 2)">
+                                    <tspan x="50%" text-anchor="middle" class="donut-percent">0%</tspan>   
+                                </text>
+                                <text y="60%" transform="translate(0, 4)">
+                                    <tspan x="50%" text-anchor="middle" class="donut-data"></tspan>   
+                                </text>
+                            </g>
+                        </g>
+                        <g class="donut-checklist" stroke-width=".70061" transform="translate(0, 30)">
+                            <circle cx="15.796" cy="20" r="1.4012"/>
+                            <path d="m17.694 15.598-1.369 1.3732c-0.17515 0.17025-0.42737 0.25922-0.67118 0.21509-0.20738-0.03783-0.8099-0.4603-0.93742-0.54227-0.32228-0.20318-0.42036-0.63756-0.21018-0.96894 0.20318-0.32228 0.63755-0.42177 0.96684-0.21018l0.2242 0.14012 1.0019-1.0054c0.27324-0.27324 0.72163-0.27324 0.99487 0 0.27324 0.27464 0.27324 0.72443 0 0.99837z"/>
+                            <path d="m25.605 16.497c0 0.38534-0.31527 0.70061-0.70061 0.70061h-5.6119c-0.38534-7e-3 -0.6936-0.31527-0.6936-0.70061s0.30827-0.6936 0.6936-0.70061h5.6119c0.38534 0 0.70061 0.31528 0.70061 0.70061z"/>
+                            <circle cx="15.796" cy="24.204" r="1.4012"/>
+                            <path d="m25.605 20.701c0 0.38534-0.31527 0.70061-0.70061 0.70061h-5.6119c-0.38534-7e-3 -0.6936-0.31528-0.6936-0.70061s0.30827-0.6936 0.6936-0.70061h5.6119c0.38534 0 0.70061 0.31527 0.70061 0.70061zm0 4.2037c0 0.38534-0.31527 0.70061-0.70061 0.70061h-5.6119c-0.38534-7e-3 -0.6936-0.31527-0.6936-0.70061 0-0.38534 0.30827-0.6936 0.6936-0.70061h5.6119c0.38534 0 0.70061 0.31527 0.70061 0.70061z"/>
+                            <path d="m27.006 11.593h-14.012c-0.77067 0-1.4012 0.63055-1.4012 1.4012v14.012c0 0.77067 0.63055 1.4012 1.4012 1.4012h14.012c0.77067 0 1.4012-0.63055 1.4012-1.4012v-14.012c0-0.77067-0.63055-1.4012-1.4012-1.4012zm0 15.063c0 0.19337-0.15694 0.3503-0.3503 0.3503h-13.312c-0.19337 0-0.3503-0.15694-0.3503-0.3503v-13.312c0-0.19337 0.15694-0.3503 0.3503-0.3503h13.312c0.19337 0 0.3503 0.15694 0.3503 0.3503z"/>
+                        </g>
+
+                        <circle class="donut-ring" cx="20" cy="20" r="19" fill="transparent" stroke-width="3.5"></circle>
+                        <circle class="donut-segment" cx="20" cy="20" r="19" fill="transparent" stroke-width="3.5" stroke-dasharray="0 120" stroke-dashoffset="30"></circle>
+                    </svg>
+                `;
                 closeResultsBtn.appendChild(closeResultsBtnIcon);
 
                 closeResultsBtn.addEventListener('click', e=>{
@@ -421,6 +458,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 evaluationResultsPage.setAttribute('tabindex', 0);
                 evaluationResultsPage.parentElement.insertBefore(closeResultsBtn, evaluationResultsPage);
             }
+            const updateEvaluationResults = updateEvaluationResultsFactory();
+            updateEvaluationResults(tests);
+
+            const updateScrollWidth = ()=>{
+                document.body.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.offsetWidth) + 'px');
+            };
+            window.addEventListener('resize',updateScrollWidth);
+            document.addEventListener('DOMContentLoaded', updateScrollWidth);
+            window.addEventListener('load', updateScrollWidth);
+            updateScrollWidth();
         }
     };
 

@@ -1009,100 +1009,77 @@ test-info+test-info::before {
 
 .close-button {
     position: fixed;
-    right: 15px;
-    top: 20px;
+    right: calc(15px + var(--scrollbar-width, 0));
+    bottom: 20px;
     z-index: 100;
     cursor: pointer;
-    padding: 0.25rem 0.75rem;
     font-size: 1.25rem;
     line-height: 1;
     background-color: transparent;
     border: 1px solid transparent;
-    scale: 0.8;
+    margin: 0;
+    padding: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 8px -3px #1c1c1c;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.close-button[aria-expanded="true"]{
+    right: calc(15px + 2 * var(--scrollbar-width, 0));
 }
 
 .close-button .burger-btn-icon {
     display: block;
-    width: 60px;
-    height: 45px;
     position: relative;
-    margin: 10px auto;
-    transform: rotate(0deg) translate(0px, 3px);
-    transition: 0.5s ease-in-out;
+}
+.close-button .burger-btn-icon .donut-percent{
+    font-size: 0.5em;
+    line-height: 1;
+    transform: translateY(0.5em);
+    font-weight: bold;
+}
+.close-button .burger-btn-icon .donut-data{
+    font-size: 0.18em;
+    line-height: 1;
+    transform: translateY(0.5em);
+    text-align: center;
+    text-anchor: middle;
+    color: #666;
+    fill: #666;
+}
+.close-button .burger-btn-icon .donut-ring{
+    stroke: #EBEBEB;
+}
+.close-button .burger-btn-icon .donut-segment{
+    --circumference: 120;
+    stroke: var(--main-color);
+    stroke-dasharray: calc(var(--progress, 0)*(var(--circumference, 1)/100)) calc(var(--circumference, 1) - (var(--progress, 0)*(var(--circumference, 1)/100)));
+    stroke-dashoffset: calc(var(--circumference, 0)*25/100);
 }
 
-.close-button .burger-btn-icon span {
-    display: block;
-    position: absolute;
-    height: 3px;
-    width: 50%;
-    background: var(--text-color);
-    opacity: 1;
-    transform: rotate(0deg);
-    transition: 0.25s ease-in-out;
+.close-button .burger-btn-icon .donut-text-wrapper,
+.close-button .burger-btn-icon .donut-checklist{
+    transition: transform 0.2s ease-in-out;
+}
+.close-button .burger-btn-icon .donut-text-wrapper{
+    transform: translate(0, 0);
+}
+.close-button .burger-btn-icon .donut-checklist{
+    transform: translate(0, -30px);
+    fill: var(--main-color);
+}
+.close-button:is(:hover, :active, :focus-visible){
+    box-shadow: 0 0 8px -1px #1c1c1c;
+}
+.close-button:is(:hover, :active, :focus-visible) .burger-btn-icon .donut-text-wrapper{
+    transform: translate(0, 30px);
+}
+.close-button:is(:hover, :active, :focus-visible) .burger-btn-icon .donut-checklist{
+    transform: translate(0, 0);
 }
 
-.close-button .burger-btn-icon span:nth-child(even) {
-    left: 50%;
-    border-radius: 0 9px 9px 0;
-}
-
-.close-button .burger-btn-icon span:nth-child(odd) {
-    left: 0px;
-    border-radius: 9px 0 0 9px;
-}
-
-.close-button .burger-btn-icon span:nth-child(1),
-.close-button .burger-btn-icon span:nth-child(2) {
-    top: 0px;
-}
-
-.close-button .burger-btn-icon span:nth-child(3),
-.close-button .burger-btn-icon span:nth-child(4) {
-    top: 18px;
-}
-
-.close-button .burger-btn-icon span:nth-child(5),
-.close-button .burger-btn-icon span:nth-child(6) {
-    top: 36px;
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(1),
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(6) {
-    transform: rotate(45deg);
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(2),
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(5) {
-    transform: rotate(-45deg);
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(1) {
-    left: 5px;
-    top: 7px;
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(2) {
-    left: calc(50% - 5px);
-    top: 7px;
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(3) {
-    left: -50%;
-    opacity: 0;
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(4) {
-    left: 100%;
-    opacity: 0;
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(5) {
-    left: 5px;
-    top: 29px;
-}
-
-.close-button[aria-expanded="true"] .burger-btn-icon span:nth-child(6) {
-    left: calc(50% - 5px);
-    top: 29px;
+.close-button .donut-percent{
+    fill: var(--main-color);
 }
