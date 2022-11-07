@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
                 if(!!closeResultsBtn){
                     closeResultsBtn.style.setProperty('--progress', `${completedPercentage}`);
-                    console.log(closeResultsBtnPercentage);
                     if(!!closeResultsBtnPercentage){
                         closeResultsBtnPercentage.innerHTML = `${completedPercentage}%`;
                     }
@@ -371,9 +370,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 closeResultsBtn.classList.add('close-button', 'no-print');
                 const closeResultsBtnIcon = document.createElement('span');
                 closeResultsBtnIcon.classList.add('burger-btn-icon');
-                // for(let i=0; i<6; i++){
-                //     closeResultsBtnIcon.appendChild(document.createElement('span'));
-                // }
 
                 closeResultsBtnIcon.innerHTML = `
                     <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut" role="img" aria-label="Percentagem de conclusão">
@@ -457,6 +453,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 evaluationResultsPage.setAttribute('inert', true);
                 evaluationResultsPage.setAttribute('tabindex', 0);
                 evaluationResultsPage.parentElement.insertBefore(closeResultsBtn, evaluationResultsPage);
+
+                evaluationResultsPage.addEventListener('keyup', (e) => {
+                    if (e.defaultPrevented && closeResultsBtn.getAttribute('aria-expanded')!=='true') return; // Do nothing if event already handled
+    
+                    if(e.key === 'Escape'){
+                        closeResultsBtn.click();
+                        requestAnimationFrame(()=>{
+                            closeResultsBtn.focus();
+                        });
+                        e.preventDefault();
+                    }
+                });
             }
             const updateEvaluationResults = updateEvaluationResultsFactory();
             updateEvaluationResults(tests);
