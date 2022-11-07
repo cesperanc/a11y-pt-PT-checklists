@@ -357,7 +357,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 closeResultsBtn.setAttribute('type', 'button');
                 closeResultsBtn.setAttribute('aria-controls', evaluationResultsPage.id);
                 closeResultsBtn.setAttribute('aria-expanded', 'false');
-                closeResultsBtn.setAttribute('aria-label', 'Apresentar resultados');
+                closeResultsBtn.setAttribute('aria-label', 'Mostrar resumo dos testes de conformidade');
+                closeResultsBtn.setAttribute('title', closeResultsBtn.getAttribute('aria-label'));
                 closeResultsBtn.classList.add('close-button', 'no-print');
                 const closeResultsBtnIcon = document.createElement('span');
                 closeResultsBtnIcon.classList.add('burger-btn-icon');
@@ -396,8 +397,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                             document.querySelectorAll('.inert').forEach(el=>el.removeAttribute('inert'));
                         }
                         closeResultsBtn.setAttribute('aria-expanded', show);
-                        closeResultsBtn.setAttribute('aria-label', show?'Ocultar resultados':'Apresentar resultados');
-
+                        closeResultsBtn.setAttribute('aria-label', show?'Ocultar resumo dos testes de conformidade':'Mostrar resumo dos testes de conformidade');
+                        closeResultsBtn.setAttribute('title', closeResultsBtn.getAttribute('aria-label'));
                     }
                 });
 
@@ -419,7 +420,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 evaluationResultsPage.setAttribute('aria-hidden', true);
                 evaluationResultsPage.setAttribute('inert', true);
                 evaluationResultsPage.setAttribute('tabindex', 0);
-                document.body.appendChild(closeResultsBtn);
+                evaluationResultsPage.parentElement.insertBefore(closeResultsBtn, evaluationResultsPage);
             }
         }
     };
