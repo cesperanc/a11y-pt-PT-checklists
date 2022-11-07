@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" mirror-in-rtl="true" fill="currentColor">
+  <style>
+        rect{
+            fill: #fff;
+            stroke: #494c4e; 
+        }
+        circle,path{
+            fill: #494c4e;
+        }
+        @media (prefers-color-scheme: dark) {
+            rect{
+              stroke: #fff;
+              fill: #494c4e; 
+            }
+            circle,path{
+                fill: #fff;
+            }
+        }
+  </style>
+  <rect x="1" y="1" width="22" height="22" fill="#fff" stroke="#494c4e" stroke-linejoin="round" stroke-width="2"/>
+  <circle fill="#494c4e" cx="6" cy="12" r="2"/>
+  <path fill="#494c4e" d="M8.708 5.717l-1.954 1.96c-.25.243-.61.37-.958.307C5.5 7.93 4.64 7.327 4.458 7.21c-.46-.29-.6-.91-.3-1.383.29-.46.91-.602 1.38-.3l.32.2 1.43-1.435c.39-.39 1.03-.39 1.42 0 .39.392.39 1.034 0 1.425z"/>
+  <path fill="#494c4e" d="M20 7c0 .55-.45 1-1 1h-8.01c-.55-.01-.99-.45-.99-1s.44-.99.99-1H19c.55 0 1 .45 1 1z"/>
+  <circle fill="#494c4e" cx="6" cy="18" r="2"/>
+  <path fill="#494c4e" d="M20 13c0 .55-.45 1-1 1h-8.01c-.55-.01-.99-.45-.99-1s.44-.99.99-1H19c.55 0 1 .45 1 1zM20 19c0 .55-.45 1-1 1h-8.01c-.55-.01-.99-.45-.99-1s.44-.99.99-1H19c.55 0 1 .45 1 1z"/>
+</svg>
