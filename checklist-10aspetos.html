@@ -34,7 +34,7 @@
             <form id="checklist" method="dialog" onsubmit="window.print()">
                 <div class="logo-container inert">
                     <input type="hidden" id="logoFileSrc" name="logoFileSrc" value="">
-                    <input type="file" id="logoFile" data-controls="logoFileSrc" accept="image/*" hidden>
+                    <input type="file" id="logoFile" data-controls="logoFileSrc" accept="image/*" hidden aria-hidden="true" aria-label="Ficheiro do logótipo" title="Ficheiro do logótipo">
                     <button type="button" id="logoFileButton" data-controls="logoFile" class="logo-update-btn" title="Alterar logótipo do relatório" aria-label="Alterar logótipo do relatório">
                         <img class="logo" src="assets/images/logo.svg" alt="Logótipo do relatório" style="max-width: 235px; width: 100%; height: auto;">
                     </button>
