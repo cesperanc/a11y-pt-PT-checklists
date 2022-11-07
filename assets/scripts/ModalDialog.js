@@ -2,6 +2,7 @@ class ModalDialog extends HTMLElement {
     #shadowRoot=null;
     #initialOverflow=null;
     #paddingRight=0;
+    #onDestroyCallback=null;
 
     constructor() {
         super();
@@ -127,10 +128,14 @@ class ModalDialog extends HTMLElement {
                 el.removeAttribute('inert');
                 el.style.removeProperty('filter');
             });
+            if(!!this.#onDestroyCallback && typeof this.#onDestroyCallback === "function"){
+                this.#onDestroyCallback.call(this);
+            }
         });
     }
 
-    open(){
+    open(onDestroy=null){
+        this.#onDestroyCallback = onDestroy;
         this.setAttribute('aria-hidden', 'false');
         
         document.querySelectorAll('main,div[role="main"]').forEach(el=>{

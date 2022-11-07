@@ -27,7 +27,7 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-results" data-empty-message="O teste não foi executado">
                         <fieldset>
-                            <legend class="test-results-legend" aria-labelledby="test-name_\${groupId}_test_\${testId}_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_label" class="test-results-legend test-results-label">Resultado do teste</h4></legend>
+                            <legend class="test-results-legend" aria-labelledby="test-name_\${groupId}_test_\${testId}_results_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_results_label" class="test-results-legend test-results-label">Resultado do teste</h4></legend>
                             <div class="test-results-wrapper">
                                 <div class="test-result-option test-result-positive" role="presentation">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_P">
@@ -48,9 +48,9 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-facts">
                         <div class="file-previews-input-wrapper">
-                            <label class="block" for="testFacts_group_\${groupId}_test_\${testId}"><h4 class="test-results-facts-labels test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Evidências</h4></label>
+                            <label class="block" for="testFacts_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_facts_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_facts_label" class="test-results-facts-labels test-results-label">Evidências</h4></label>
                             <input type="file" id="testFacts_group_\${groupId}_test_\${testId}" data-controls="testFacts_group_\${groupId}_test_\${testId}_data" multiple accept="image/*">
-                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden>Carregar imagens com as evidências</button>
+                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden title="Carregar imagens com as evidências" aria-lable="Carregar imagens com as evidências">Carregar imagens</button>
                             <input type="hidden" id="testFacts_group_\${groupId}_test_\${testId}_data" name="testFacts['group_\${groupId}']['test_\${testId}']" value="">
                         </div>
                         <div class="file-previews" data-empty-message="Não foram apresentadas evidências"></div>
@@ -58,7 +58,7 @@ class TestInfo extends HTMLElement {
                 </div>
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-notes">
-                        <label class="block" for="testNotes_group_\${groupId}_test_\${testId}"><h4 class="test-results-notes test-results-label" aria-labelledby="test-name_\${groupId}_test_\${testId}">Notas</h4></label>
+                        <label class="block" for="testNotes_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_notes_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_notes_label" class="test-results-notes test-results-label">Notas</h4></label>
                         <textarea resizable class="block form-control no-print-if-js" data-controls="testNotes_group_\${groupId}_test_\${testId}_preview" id="testNotes_group_\${groupId}_test_\${testId}" name="testNotes['group_\${groupId}']['test_\${testId}']"></textarea>
                         <div id="testNotes_group_\${groupId}_test_\${testId}_preview" class="test-result-notes-preview no-print-if-no-js show-only-when-printing" role="presentation" data-empty-message="Não foram adicionadas notas"></div>
                     </div>
@@ -93,20 +93,27 @@ class TestInfo extends HTMLElement {
     enableFilePreviews() {
         this.querySelectorAll('.test-result-facts input[type="file"]').forEach(fileInput => {
 
-            const previewContainer = fileInput.closest('.test-result-facts').querySelector('.file-previews');
+            const previewContainerWrapper = fileInput.closest('.test-result-facts');
+            if (!previewContainerWrapper) return;
+
+            const previewContainer = previewContainerWrapper.querySelector('.file-previews');
             if (!previewContainer) return;
+
+            const previewContainerTmp = document.createElement('div');
 
             const fileInputData = document.getElementById(fileInput.getAttribute('data-controls'));
             if (!!fileInputData) {
                 fileInputData.addEventListener('change', e => {
                     try {
-                        previewContainer.textContent = "";
-
                         const images = JSON.parse(e.currentTarget.value);
                         if (images.length > 0) {
-                            images.forEach(image => {
+                            images.forEach((image, index) => {
+                                if(!image) return;
+
+                                const thumbnailWrapper = document.createElement("div");
+                                thumbnailWrapper.classList.add('thumbnail-wrapper');
                                 const button = document.createElement("button");
-                                button.classList.add('thumbnail-wrapper');
+                                button.classList.add('thumbnail');
                                 button.setAttribute('type', 'button');
                                 button.setAttribute('title', `Ative o botão para ampliar a imagem "${image?.name}".`);
                                 button.setAttribute('aria-label', button.getAttribute('title'));
@@ -137,7 +144,11 @@ class TestInfo extends HTMLElement {
                                             } = e.target;
 
                                             content.appendChild(img);
-                                            modal.open();
+                                            modal.open(()=>{
+                                                requestAnimationFrame(()=>{
+                                                    button.focus();
+                                                })
+                                            });
 
                                             this.enableImageControls(img, modal);
                                         };
@@ -145,15 +156,83 @@ class TestInfo extends HTMLElement {
                                     }
                                 });
 
-                                previewContainer.appendChild(button);
+                                thumbnailWrapper.appendChild(button);
+                                previewContainerTmp.appendChild(thumbnailWrapper);
+
+                                const removeButton = document.createElement("button");
+                                removeButton.classList.add('remove-image');
+                                removeButton.setAttribute('type', 'button');
+                                removeButton.setAttribute('title', `Remover a imagem "${image?.name}".`);
+                                removeButton.setAttribute('aria-label', button.getAttribute('title'));
+                                removeButton.innerHTML = `<svg role="presentation" width="24" height="24" version='1.1' viewBox='0 0 122 122' xmlns='http://www.w3.org/2000/svg'><path d='m5.5643 36.223c-4.6005-4.4976-8.3065-7.3272-2.5345-12.881l18.615-18.012c5.8997-5.9124 9.3501-5.6168 14.909 0l25.026 24.853 24.941-24.727c4.5579-4.5821 7.3907-8.2562 12.992-2.5339l18.125 18.455c5.9636 5.8491 5.6654 9.2909 0 14.781l-24.983 24.811 24.983 24.853c5.6442 5.4479 5.9423 8.8897 0 14.781l-18.189 18.455c-5.6016 5.7224-8.5195 2.1116-12.992-2.5128l-24.877-24.832-25.09 24.938c-5.4951 5.5745-8.9455 5.8702-14.909 0l-18.615-18.012c-5.772-5.5534-2.1299-8.4463 2.5345-12.881l25.026-24.79z' fill='#1C1C1C' stroke-width='2.1207'/></svg>`;
+                                removeButton.addEventListener('click', (e)=>{
+                                    try{
+                                        const images = JSON.parse(fileInputData.value);
+                                        const index = images.findIndex((element)=>element.name === image?.name && element.data === image?.data);
+                                        
+                                        if(index>-1){
+                                            images.splice(index, 1);
+                                            fileInputData.value = JSON.stringify(images);
+                                            fileInputData.dispatchEvent(new Event('change'));
+                                        }
+                                    }catch(ex){}
+
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                });
+                                thumbnailWrapper.appendChild(removeButton);
                             });
+
+                            previewContainer.replaceChildren(...previewContainerTmp.children);
+                        }else{
+                            previewContainer.textContent = "";
                         }
                     } catch (ex) {
-                        console.log(ex);
-                        previewContainer.innerHTML = "Erro!";
+                        console.error(ex);
+                        const error = document.createElement('div');
+                        error.innerText = 'Erro!';
+                        previewContainer.appendChild(error);
                     }
                 });
             }
+
+            const processFiles = (files)=>{
+                let imagesToSave = [];
+
+                try{
+                    imagesToSave = JSON.parse(fileInputData.value?.length>0?fileInputData.value:[]||[]);
+                }catch(ex){};
+
+                const loading = document.createElement('div');
+                loading.classList.add('loading-thumbnail');
+                loading.innerText = "A carregar...";
+                previewContainer.appendChild(loading);
+
+                const promises = [];
+                for (let i = 0; i < files.length; i++) {
+                    if (!files[i].type.match("image")) continue;
+                    promises.push(new Promise((resolve, reject) => {
+                        const imageReader = new FileReader();
+                        imageReader.addEventListener("load", (e) => {
+                            if(!!fileInputData){
+                                if(imagesToSave.findIndex((element)=>element.name === files[i]?.name && element.data === e?.target?.result)<0){
+                                    imagesToSave.push({name: files[i].name, data: e.target.result});
+                                }
+                            }
+                            resolve(e.target);
+                        });
+                        imageReader.onerror = reject;
+                        imageReader.readAsDataURL(files[i]);
+                    }));
+                }
+                Promise.all(promises).then(() => {
+                    if (!!fileInputData) {
+                        fileInputData.value = JSON.stringify(imagesToSave);
+                        fileInputData.dispatchEvent(new Event('change'));
+                    }
+                    loading.remove();
+                });
+            };
 
             fileInput.addEventListener("change", (e) => {
                 const features = [
@@ -163,33 +242,24 @@ class TestInfo extends HTMLElement {
                     'Blob',
                 ];
                 if (!features.some(feature => !(feature in window))) {
-                    const files = e.target.files;
-                    const imagesToSave = [];
-
-                    previewContainer.innerHTML = "A carregar...";
-                    const promises = [];
-                    for (let i = 0; i < files.length; i++) {
-                        if (!files[i].type.match("image")) continue;
-                        promises.push(new Promise((resolve, reject) => {
-                            const imageReader = new FileReader();
-                            imageReader.addEventListener("load", (e) => {
-                                if(!!fileInputData){
-                                    imagesToSave.push({name: files[i].name, data: e.target.result});
-                                }
-                                resolve(e.target);
-                            });
-                            imageReader.onerror = reject;
-                            imageReader.readAsDataURL(files[i]);
-                        }));
-                    }
-                    Promise.all(promises).then(() => {
-                        if (!!fileInputData) {
-                            fileInputData.value = JSON.stringify(imagesToSave);
-                            fileInputData.dispatchEvent(new Event('change'));
-                        }
-                    });
+                    processFiles(e.target.files);
                 }
             });
+
+            // Drag and drop support
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                previewContainerWrapper.addEventListener(eventName, (e)=>{
+                    e.currentTarget.classList.toggle('highlight', ['dragenter', 'dragover'].includes(eventName));
+                    e.preventDefault();
+                    e.stopPropagation();
+                }, false)
+            });
+
+            previewContainerWrapper.addEventListener('drop', e=>{
+                processFiles(e.dataTransfer.files);
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
         });
     }
 

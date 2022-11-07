@@ -328,6 +328,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                         }
                     });
 
+                    // Drag and drop support
                     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                         logoFileButton.addEventListener(eventName, (e)=>{
                             e.currentTarget.classList.toggle('highlight', ['dragenter', 'dragover'].includes(eventName));
@@ -341,8 +342,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
                         e.preventDefault();
                         e.stopPropagation();
                     }, false);
-
-                    
                 }
             }
             
