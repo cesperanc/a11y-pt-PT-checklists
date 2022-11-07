@@ -28,10 +28,10 @@
 
     <body class="_custom-layout">
         <main class="root">
-            <a href="#checklist" class="visually-hidden-focusable">Ir para o conteúdo</a>
+            <a href="#checklist" class="visually-hidden-focusable inert">Ir para o conteúdo</a>
 
             <form id="checklist" method="dialog" onsubmit="window.print()">
-                <div class="logo-container">
+                <div class="logo-container inert">
                     <input type="hidden" id="logoFileSrc" name="logoFileSrc" value="">
                     <input type="file" id="logoFile" data-controls="logoFileSrc" accept="image/*" hidden>
                     <button type="button" id="logoFileButton" data-controls="logoFile" class="logo-update-btn" title="Alterar logótipo do relatório" aria-label="Alterar logótipo do relatório">
@@ -39,7 +39,7 @@
                     </button>
                 </div>
 
-                <div class="page checklist-metadata-container">
+                <div class="page checklist-metadata-container inert">
                     <h1>Checklist "10 aspetos funcionais"</h1>
                     <p class="mb-3 mt-0">
                         Conformidade e repositório de evidências
@@ -65,13 +65,15 @@
                     <input type="submit" value="Imprimir" style="visibility: hidden;">
                 </div>
 
-                <div id="evaluationResultsPage" class="page results-container">
-                    <h2>Testes de conformidade</h2>
+                <div id="evaluationResultsPage" aria-labelledby="evaluationResultsPageTitle" class="results-container">
+                    <div class="page">
+                        <h2 id="evaluationResultsPageTitle">Testes de conformidade</h2>
 
-                    <div id="evaluationResults"></div>
+                        <div id="evaluationResults"></div>
+                    </div>
                 </div>
 
-                <div id="checklistTests" class="checklist-container"></div>
+                <div id="checklistTests" class="checklist-container inert"></div>
             </form>
         </main>
     </body>

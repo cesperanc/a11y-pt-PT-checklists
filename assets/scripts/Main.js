@@ -36,13 +36,87 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const updateEvaluationResultsFactory = ()=>{
         const resultsContainer = document.getElementById('evaluationResults');
         const checkList = document.getElementById('checklistTests');
+        const evaluationResultsPage = document.getElementById('evaluationResultsPage');
 
         return (tests)=>{
             if(!resultsContainer || !checkList || !Array.isArray(tests)) return;
 
             resultsContainer.textContent = '';
 
-            const testResultsWrapper = document.createElement('span');
+
+            const testResultsSummaryWrapper = document.createElement('div');
+            testResultsSummaryWrapper.classList.add('tests-results-summary-wrapper');
+            testResultsSummaryWrapper.innerHTML = `
+            <table>
+                <caption><h3>Resumo dos testes de conformidade</h3></caption>
+                <tbody>
+                    <tr>
+                        <th scope="row">Bateria de testes</th>
+                        <td id="number-of-tests"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Testes conformes</th>
+                        <td id="number-of-successful-tests"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Testes não aplicáveis</th>
+                        <td id="number-of-unappliable-tests"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Testes não conformes</th>
+                        <td id="number-of-failed-tests"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Testes não avaliados</th>
+                        <td id="number-of-unexecuted-tests"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row">Nível de conformidade</th>
+                        <td id="compliance-level"></td>
+                    </tr>
+                </tfoot>
+            </table>
+            `;
+            resultsContainer.appendChild(testResultsSummaryWrapper);
+
+            const updateSummary = ()=>{
+                const checkResultsForType = (type)=>{
+                    return tests.reduce((previousValue, group)=>{
+                        return group.tests.reduce((previousValue, test)=>{
+                            return previousValue+document.querySelectorAll(`#test-g${group.ID}-t${test.ID}-wrapper .test-results input[type="radio"][value="${type}"]:checked`).length;
+                        }, previousValue);
+                    }, 0);
+                };
+                const numberOfTests = tests.reduce((previousValue, group)=>previousValue+group.tests.length, 0);
+                const numberOfSuccessfulTests = checkResultsForType('P');
+                const numberOfFailedTests = checkResultsForType('N');
+                const numberOfUnappliableTests = checkResultsForType('NA');
+                const numberOfUntestedTests = numberOfTests-(numberOfSuccessfulTests+numberOfFailedTests+numberOfUnappliableTests);
+                const completedPercentage = Math.round(((numberOfTests-numberOfUntestedTests)/numberOfTests)*100);
+                const complianceLevel = Math.round((numberOfSuccessfulTests/(numberOfTests-numberOfUnappliableTests)) * 1000) / 10;
+
+                const results = {
+                    'number-of-tests': numberOfTests,
+                    'number-of-successful-tests': numberOfSuccessfulTests,
+                    'number-of-unappliable-tests': numberOfUnappliableTests,
+                    'number-of-failed-tests': numberOfFailedTests,
+                    'number-of-unexecuted-tests': numberOfUntestedTests,
+                    'compliance-level': `${complianceLevel}%`,
+                }
+                Object.keys(results).forEach((dataKey)=>{
+                    testResultsSummaryWrapper.querySelector(`#${dataKey}`).innerText = results[dataKey];
+                });
+
+
+                if(!!evaluationResultsPage){
+                    evaluationResultsPage.style.setProperty('--progress', `${completedPercentage}%`);
+                }
+            };
+            updateSummary();
+
+            const testResultsWrapper = document.createElement('div');
             testResultsWrapper.classList.add('final-test-results-wrapper', 'test-results-labels');
             testResultsWrapper.setAttribute('role', 'presentation');
             testResultsWrapper.setAttribute('aria-hidden', true);
@@ -62,6 +136,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 });
             }
             testResultsWrapper.appendChild(testResultsContainer);
+
+            const testResultsTitle = document.createElement('h3');
+            testResultsTitle.innerText = 'Detalhes dos testes';
+            testResultsWrapper.appendChild(testResultsTitle);
+
             resultsContainer.appendChild(testResultsWrapper);
 
             const groupsUl = document.createElement('ul');
@@ -116,6 +195,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                                         stateItem.setAttribute('aria-hidden', !radio.checked);
                                     }
                                 });
+
+                                updateSummary();
                             });
                             testResultsContainer.appendChild(testResultItem);
                         });
@@ -302,9 +383,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
                                 document.body.style.removeProperty('overflow');
                             }
                         }
+                        evaluationResultsPage.setAttribute('aria-hidden', !show);
                         evaluationResultsPage.classList.toggle('open', show);
+                        if(show){
+                            evaluationResultsPage.removeAttribute('inert');
+                            requestAnimationFrame(()=>{
+                                evaluationResultsPage.focus();
+                            });
+                            document.querySelectorAll('.inert').forEach(el=>el.setAttribute('inert', true));
+                        }else{
+                            evaluationResultsPage.setAttribute('inert', true);
+                            document.querySelectorAll('.inert').forEach(el=>el.removeAttribute('inert'));
+                        }
                         closeResultsBtn.setAttribute('aria-expanded', show);
                         closeResultsBtn.setAttribute('aria-label', show?'Ocultar resultados':'Apresentar resultados');
+
                     }
                 });
 
@@ -314,10 +407,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
                         e.stopPropagation();
                         closeResultsBtn.setAttribute('aria-expanded', 'true');
                         closeResultsBtn.click();
-                        document.querySelector(e.currentTarget.getAttribute('href'))?.scrollIntoView();
-
+                        const destinationEl = document.querySelector(e.currentTarget.getAttribute('href'));
+                        if(!!destinationEl){
+                            requestAnimationFrame(()=>{
+                                destinationEl.scrollIntoView();
+                                destinationEl.focus();
+                            });
+                        }
                     });
                 });
+                evaluationResultsPage.setAttribute('aria-hidden', true);
+                evaluationResultsPage.setAttribute('inert', true);
+                evaluationResultsPage.setAttribute('tabindex', 0);
                 document.body.appendChild(closeResultsBtn);
             }
         }
