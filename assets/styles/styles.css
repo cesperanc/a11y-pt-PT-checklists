@@ -728,9 +728,9 @@ fieldset {
     display: none;
     justify-content: center;
     align-items: center;
-    color: #1A30FF;
-    background: var(--background-color, white);
-    border: 2px solid #1A30FF;
+    color: var(--active-text-color, white);
+    background-color: rgb(26, 48, 255);
+    border: 2px solid rgb(26, 48, 255);
     border-radius: var(--border-radius, 10px);
     padding: 0.7rem 1.5rem;
     margin: 0.5rem 0;
@@ -740,8 +740,8 @@ fieldset {
 }
 
 .test-results-facts-browse-btn:is(:hover, :active, :focus) {
-    color: var(--active-text-color, white);
-    background: #1A30FF;
+    box-shadow: 0px 3px 10px -2px rgb(26, 48, 255);
+    outline: 2px solid rgb(26, 48, 255);
 }
 
 .test-result-facts input[type=file][hidden]+.test-results-facts-browse-btn {
@@ -771,6 +771,8 @@ fieldset {
 }
 .test-result-notes textarea{
     border-radius: var(--border-radius, 10px);
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 .test-result-notes textarea:is(:hover, :focus, :active){
     border: 2px solid #1A30FF;
