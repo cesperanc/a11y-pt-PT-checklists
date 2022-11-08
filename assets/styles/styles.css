@@ -706,13 +706,14 @@ fieldset {
 .test-results-label {
     margin: 0;
     position: absolute;
-    top: -1.5rem;
-    left: 1rem;
+    top: 0;
+    left: 0;
     color: var(--main-color, #41228e);
     background: var(--background-color, white);
     border: 2px solid var(--main-color, #41228e);
     border-radius: var(--border-radius, 10px);
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
+    transform: translate(2rem, -50%);
 }
 
 .test-results-legend,
@@ -727,9 +728,9 @@ fieldset {
     display: none;
     justify-content: center;
     align-items: center;
-    color: var(--main-color, #41228e);
+    color: #1A30FF;
     background: var(--background-color, white);
-    border: 2px solid var(--main-color, #41228e);
+    border: 2px solid #1A30FF;
     border-radius: var(--border-radius, 10px);
     padding: 0.7rem 1.5rem;
     margin: 0.5rem 0;
@@ -740,7 +741,7 @@ fieldset {
 
 .test-results-facts-browse-btn:is(:hover, :active, :focus) {
     color: var(--active-text-color, white);
-    background: var(--active-background-color, #41228e);
+    background: #1A30FF;
 }
 
 .test-result-facts input[type=file][hidden]+.test-results-facts-browse-btn {
@@ -768,7 +769,12 @@ fieldset {
 .test-result-facts .file-previews:empty {
     display: none;
 }
-
+.test-result-notes textarea{
+    border-radius: var(--border-radius, 10px);
+}
+.test-result-notes textarea:is(:hover, :focus, :active){
+    border: 2px solid #1A30FF;
+}
 textarea[resizable] {
     max-width: 100%;
 }
