@@ -26,8 +26,8 @@ class TestInfo extends HTMLElement {
                 <div class="test-description"><slot name="test-description"></slot></div>
                 <div class="form-group-wrapper">
                     <div class="form-group test-results" data-empty-message="O teste não foi executado">
-                        <fieldset>
-                            <legend class="test-results-legend" aria-labelledby="test-name_\${groupId}_test_\${testId}_results_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_results_label" class="test-results-legend test-results-label">Resultado do teste</h4></legend>
+                        <fieldset aria-labelledby="test-name_\${groupId}_test_\${testId}_results_label test-name_\${groupId}_test_\${testId}">
+                            <legend class="test-results-legend"><h4 id="test-name_\${groupId}_test_\${testId}_results_label" class="test-results-legend test-results-label">Resultado do teste</h4></legend>
                             <div class="test-results-wrapper">
                                 <div class="test-result-option test-result-positive" role="presentation">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_P">
