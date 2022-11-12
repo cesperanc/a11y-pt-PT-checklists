@@ -50,7 +50,7 @@ class TestInfo extends HTMLElement {
                         <div class="file-previews-input-wrapper">
                             <label class="block" for="testFacts_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_facts_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_facts_label" class="test-results-facts-labels test-results-label">Evidências</h4></label>
                             <input type="file" id="testFacts_group_\${groupId}_test_\${testId}" data-controls="testFacts_group_\${groupId}_test_\${testId}_data" multiple accept="image/*">
-                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden title="Carregar imagens com as evidências" aria-lable="Carregar imagens com as evidências">Carregar imagens</button>
+                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden title="Carregar imagens com as evidências" aria-label="Carregar imagens com as evidências">Carregar imagens</button>
                             <input type="hidden" id="testFacts_group_\${groupId}_test_\${testId}_data" name="testFacts['group_\${groupId}']['test_\${testId}']" value="">
                         </div>
                         <div class="file-previews" data-empty-message="Não foram apresentadas evidências"></div>
