@@ -11,20 +11,11 @@
         <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
         <link rel="stylesheet" href="assets/styles/styles.css" type="text/css" media="all">
 
-        <script type="module" src="./assets/scripts/TestGroupComponent.js"></script>
-        <script type="module" src="./assets/scripts/TestInfoComponent.js"></script>
-        <script type="module" src="./assets/scripts/ModalDialog.js"></script>
         <script type="module">
             import Config from "./checklist-10aspetos-config.js";
-            // Load the default tests for version 1.0
-            let { '1.0':tests } = Config;
-            Object.defineProperty(window, "CheckListTests", {
-               get() { return tests; },
-               //set(value) { tests = value; },
-               enumerable: true
-            });
+            import App from "./assets/scripts/App.js";
+            App(Config['1.0']);
          </script>
-        <script type="module" src="assets/scripts/Main.js"></script>
     </head>
 
     <body class="_custom-layout">

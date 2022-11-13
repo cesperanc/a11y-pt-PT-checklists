@@ -1,3 +1,4 @@
+export const TagName = 'modal-dialog';
 class ModalDialog extends HTMLElement {
     #shadowRoot=null;
     #initialOverflow=null;
@@ -156,5 +157,5 @@ class ModalDialog extends HTMLElement {
     }
 }
 
-customElements.define('modal-dialog', ModalDialog);
+customElements.define(TagName, ModalDialog);
 export default ModalDialog;

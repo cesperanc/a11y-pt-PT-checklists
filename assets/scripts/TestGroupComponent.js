@@ -1,3 +1,5 @@
+
+export const TagName = 'test-group';
 class TestGroup extends HTMLElement {
     #shadowRoot=null;
 
@@ -36,5 +38,5 @@ class TestGroup extends HTMLElement {
     }
 }
 
-customElements.define('test-group', TestGroup);
+customElements.define(TagName, TestGroup);
 export default TestGroup;

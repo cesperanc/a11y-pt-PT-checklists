@@ -1,3 +1,6 @@
+import { TagName as ModalDialog } from "./ModalDialogComponent.js";
+
+export const TagName = 'test-info';
 class TestInfo extends HTMLElement {
     #shadowRoot = null;
 
@@ -120,7 +123,7 @@ class TestInfo extends HTMLElement {
                                 button.innerHTML = `<img class="thumbnail" src="${image?.data}" alt="${image?.name}">`;
 
                                 button.addEventListener('click', () => {
-                                    const modal = document.createElement('modal-dialog');
+                                    const modal = document.createElement(ModalDialog);
                                     if (!modal) return;
                                     document.body.appendChild(modal);
                                     const content = modal.getDialog();
@@ -401,5 +404,5 @@ class TestInfo extends HTMLElement {
     }
 }
 
-customElements.define('test-info', TestInfo);
+customElements.define(TagName, TestInfo);
 export default TestInfo;
