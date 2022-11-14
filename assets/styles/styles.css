@@ -1098,14 +1098,14 @@ test-info+test-info::before {
 
 .menu-button .burger-btn-icon .donut-text-wrapper,
 .menu-button .burger-btn-icon .donut-checklist{
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 .menu-button .burger-btn-icon .donut-text-wrapper{
     transform: translate(0, 0);
 }
 .menu-button .burger-btn-icon .donut-checklist{
-    transform: matrix(0.765,0,0,-20,4.6998879,4.7000153);
-    fill: var(--main-color);
+    transform: matrix(1.6,0,0,1.6,-16,-50);
+    color: var(--main-color);
 }
 .menu-button:is(:hover, :active, :focus-visible){
     box-shadow: 0 0 8px -1px #1c1c1c;
@@ -1114,7 +1114,45 @@ test-info+test-info::before {
     transform: translate(0, 30px);
 }
 .menu-button:is(:hover, :active, :focus-visible,[aria-expanded="true"]) .burger-btn-icon .donut-checklist{
-    transform: matrix(0.765,0,0,0.765,4.6998879,4.7000153);
+    transform: matrix(1.6,0,0,1.6,-16,-15);
+    opacity: 1;
+}
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .donut-checklist{
+    opacity: 0;
+}
+
+.menu-button .burger-btn-icon .closeIcon .close-dash{
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    color: var(--main-color);
+}
+.menu-button .burger-btn-icon .closeIcon .tl{
+    transform: matrix(1, 0, 0, 1, -20, -20);
+}
+.menu-button .burger-btn-icon .closeIcon .tr{
+    transform: matrix(1, 0, 0, 1, 20, -20);
+}
+.menu-button .burger-btn-icon .closeIcon .br{
+    transform: matrix(1, 0, 0, 1, 20, 20);
+}
+.menu-button .burger-btn-icon .closeIcon .bl{
+    transform: matrix(1, 0, 0, 1, -20, 20);
+}
+
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .closeIcon{
+    opacity: 1;
+}
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .donut-checklist{
+    opacity: 0;
+}
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .closeIcon .tl,
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .closeIcon .tr,
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .closeIcon .br,
+.menu-button[aria-expanded="true"]:is(:hover, :active, :focus-visible) .burger-btn-icon .closeIcon .bl{
+    opacity: 1;
+    transform: matrix(1, 0, 0, 1, 0, 0);
 }
 .menu-button .donut-percent{
     fill: var(--main-color);
@@ -1149,7 +1187,8 @@ test-info+test-info::before {
 }
 
 .app-menu .menu-entry-item{
-    --btnSize: 38px;
+    --btnSize: 45px;
+    --distance: 80px;
     position: absolute;
     right: calc(var(--btnSize, 48px) / -2);
     bottom: calc(var(--btnSize, 48px) / -2);
@@ -1163,13 +1202,53 @@ test-info+test-info::before {
     border-radius: 50%;
     text-align: center;
     background-color: hsla(0,0%,0%,.1);
-    transition: transform .3s ease, background .2s ease;
+    transition: transform .3s ease, background .2s ease, color .2s ease, fill .2s ease;
     cursor: pointer;
+    overflow: hidden;
 }
 .app-menu[aria-hidden="false"] .menu-entry-item{
-    transform: translate(calc(70px * var(--xC,0)),calc(70px * var(--yC,0)));
+    transform: translate(calc(var(--distance, 80px) * var(--xC,0)),calc(var(--distance, 80px) * var(--yC,0)));
 }
 .app-menu .menu-entry-item:is(:hover, :active, :focus-visible,[aria-expanded="true"]){
     background-color: var(--main-color);
     color: white;
+}
+
+.app-menu .menu-entry-item.menu-entry-results:is(:scope, :hover, :active, :focus) .results-checlist-icon{
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+.app-menu .menu-entry-item.menu-entry-results[aria-expanded="true"]:is(:scope, :hover, :active, :focus) .results-checlist-icon{
+    opacity: 0;
+}
+
+.app-menu .menu-entry-item.menu-entry-results .close-dash{
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    color: white;
+}
+.app-menu .menu-entry-item.menu-entry-results .tl{
+    transform: matrix(1, 0, 0, 1, -20, -20);
+}
+.app-menu .menu-entry-item.menu-entry-results .tr{
+    transform: matrix(1, 0, 0, 1, 20, -20);
+}
+.app-menu .menu-entry-item.menu-entry-results .br{
+    transform: matrix(1, 0, 0, 1, 20, 20);
+}
+.app-menu .menu-entry-item.menu-entry-results .bl{
+    transform: matrix(1, 0, 0, 1, -20, 20);
+}
+
+.app-menu .menu-entry-item.menu-entry-results[aria-expanded="true"]:is(:scope, :hover, :active, :focus) .closeIcon{
+    opacity: 1;
+}
+.app-menu .menu-entry-item.menu-entry-results[aria-expanded="true"]:is(:scope, :hover, :active, :focus) .closeIcon .tl,
+.app-menu .menu-entry-item.menu-entry-results[aria-expanded="true"]:is(:scope, :hover, :active, :focus) .closeIcon .tr,
+.app-menu .menu-entry-item.menu-entry-results[aria-expanded="true"]:is(:scope, :hover, :active, :focus) .closeIcon .br,
+.app-menu .menu-entry-item.menu-entry-results[aria-expanded="true"]:is(:scope, :hover, :active, :focus) .closeIcon .bl{
+    opacity: 1;
+    transform: matrix(1, 0, 0, 1, 0, 0);
 }
