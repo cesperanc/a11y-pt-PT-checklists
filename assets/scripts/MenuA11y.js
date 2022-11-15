@@ -5,6 +5,7 @@ class MenuA11y {
     #firstMenuItem = {};
     #lastMenuItem = {};
     #menuItemGroups = {};
+    #menuTrigger = null;
 
     constructor(node) {
         this.#domNode = node;
@@ -38,6 +39,18 @@ class MenuA11y {
         this.#firstMenuItem[menuId] = menuItems.length > 0 ? menuItems[0] : null;
         this.#lastMenuItem[menuId] = menuItems.length > 0 ? menuItems[menuItems.length - 1] : null;
         this.#menuItemGroups[menuId] = [];
+
+        const menuTriggerEl = document.querySelector(`[aria-controls="${menuId}"]`);
+        if (!!menuTriggerEl) {
+            this.#menuTrigger = menuTriggerEl;
+            (new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.type === "attributes" && mutation.attributeName === "aria-expanded" && mutation.target.getAttribute(mutation.attributeName)==='true') {
+                        this.#setFocusToFirstMenuItem(menuId);
+                    }
+                }
+            })).observe(menuTriggerEl, { attributes: true });
+        }
 
         for (let i = 0; i < menuItems.length; i++) {
             const menuItem = menuItems[i];
@@ -109,12 +122,12 @@ class MenuA11y {
             const menu = this.#getMenu(menuItem);
             menu.setAttribute('aria-expanded', 'false');
             const menuTriggerEl = document.querySelector(`[aria-controls="${(menu.getAttribute('id'))}"]`);
-            if(!!menuTriggerEl){
+            if (!!menuTriggerEl) {
                 menuTriggerEl.dispatchEvent(new Event('click'));
-                requestAnimationFrame(()=>{
+                requestAnimationFrame(() => {
                     menuTriggerEl.focus();
                 });
-            }else{
+            } else {
                 menu.focus();
             }
             return menu;
@@ -228,7 +241,6 @@ class MenuA11y {
 
     #onKeyDown(event) {
         const target = event.currentTarget;
-        console.log(this.#getMenu(target));
         const menuId = this.#getMenu(target).getAttribute('id');
         const key = event.key;
         let handled = false;
@@ -253,13 +265,13 @@ class MenuA11y {
 
             case 'ArrowDown':
             case 'Down':
-                this.#setFocusToFirstMenuItem(menuId);
+                this.#setFocusToNextMenuItem(menuId, target);
                 handled = true;
                 break;
 
             case 'Up':
             case 'ArrowUp':
-                this.#setFocusToLastMenuItem(menuId);
+                this.#setFocusToPreviousMenuItem(menuId, target);
                 handled = true;
                 break;
 
@@ -277,13 +289,13 @@ class MenuA11y {
 
             case 'Home':
             case 'PageUp':
-                this.#setFocusToFirstMenuItem(menuId, target);
+                this.#setFocusToFirstMenuItem(menuId);
                 handled = true;
                 break;
 
             case 'End':
             case 'PageDown':
-                this.#setFocusToLastMenuItem(menuId, target);
+                this.#setFocusToLastMenuItem(menuId);
                 handled = true;
                 break;
 

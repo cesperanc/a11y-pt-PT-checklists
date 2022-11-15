@@ -1209,7 +1209,7 @@ test-info+test-info::before {
 .app-menu[aria-hidden="false"] .menu-entry-item{
     transform: translate(calc(var(--distance, 80px) * var(--xC,0)),calc(var(--distance, 80px) * var(--yC,0)));
 }
-.app-menu .menu-entry-item:is(:hover, :active, :focus-visible,[aria-expanded="true"]){
+.app-menu .menu-entry-item:is(:hover, :active, :focus,[aria-expanded="true"]){
     background-color: var(--main-color);
     color: white;
 }

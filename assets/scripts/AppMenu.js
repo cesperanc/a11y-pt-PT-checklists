@@ -1,9 +1,9 @@
 import Menu from "./MenuA11y.js";
 import App from "./App.js";
 
-export default ()=>{
+export default () => {
     const evaluationResultsPage = document.getElementById('evaluationResultsPage');
-    if(!!evaluationResultsPage){
+    if (!!evaluationResultsPage) {
         const menuContainer = document.createElement('div');
         menuContainer.classList.add('app-menu-container', 'no-print');
 
@@ -27,12 +27,18 @@ export default ()=>{
         menuItemSave.tabIndex = 0;
         menuItemSave.setAttribute('aria-label', 'Guardar formulário');
         menuItemSave.setAttribute('title', menuItemSave.getAttribute('aria-label'));
-        menuItemSave.addEventListener('click', e=>{
+        menuItemSave.addEventListener('click', e => {
             e.preventDefault();
             App.saveFile();
             menuBtn.dispatchEvent(new Event('click'));
         });
         menuEl.appendChild(menuItemSave);
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                menuItemSave.dispatchEvent(new Event('click'));
+            }
+        });
 
         // Save button
         const menuItemImport = document.createElement('li');
@@ -43,12 +49,21 @@ export default ()=>{
         menuItemImport.tabIndex = 0;
         menuItemImport.setAttribute('aria-label', 'Importar formulário');
         menuItemImport.setAttribute('title', menuItemImport.getAttribute('aria-label'));
-        menuItemImport.addEventListener('click', e=>{
+        menuItemImport.addEventListener('click', e => {
             e.preventDefault();
             App.openFile()
             menuBtn.dispatchEvent(new Event('click'));
         });
         menuEl.appendChild(menuItemImport);
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'o') {
+                e.preventDefault();
+                menuItemImport.dispatchEvent(new Event('click'));
+                requestAnimationFrame(() => {
+                    menuItemImport.focus();
+                });
+            }
+        });
 
 
         // Results button
@@ -77,56 +92,56 @@ export default ()=>{
         menuItemResults.setAttribute('aria-expanded', 'false');
         menuItemResults.setAttribute('aria-label', 'Mostrar resumo dos testes de conformidade');
         menuItemResults.setAttribute('title', menuItemResults.getAttribute('aria-label'));
-        menuItemResults.addEventListener('click', e=>{
+        menuItemResults.addEventListener('click', e => {
             const menuBtn = e.currentTarget;
-            const show = e.currentTarget.getAttribute('aria-expanded')==='false';
-            if(!!evaluationResultsPage){
-                if(show && !!document.body.style.overflow){
+            const show = e.currentTarget.getAttribute('aria-expanded') === 'false';
+            if (!!evaluationResultsPage) {
+                if (show && !!document.body.style.overflow) {
                     menuBtn.dataset.bodyOverflow = document.body.style.overflow;
                     document.body.style.overflow = 'hidden';
-                }else if('bodyOverflow' in menuBtn.dataset){
+                } else if ('bodyOverflow' in menuBtn.dataset) {
                     document.body.style.overflow = menuBtn.dataset.bodyOverflow;
                     delete menuBtn.dataset.bodyOverflow;
-                }else{
-                    if(show){
+                } else {
+                    if (show) {
                         document.body.style.overflow = 'hidden';
-                    }else{
+                    } else {
                         document.body.style.removeProperty('overflow');
                     }
                 }
                 evaluationResultsPage.setAttribute('aria-hidden', !show);
                 evaluationResultsPage.classList.toggle('open', show);
-                if(show){
+                if (show) {
                     evaluationResultsPage.style.removeProperty('display');
                     evaluationResultsPage.removeAttribute('inert');
                     // requestAnimationFrame(()=>{
                     //     evaluationResultsPage.focus();
                     // });
-                    document.querySelectorAll('.inert').forEach(el=>el.setAttribute('inert', true));
-                }else{
+                    document.querySelectorAll('.inert').forEach(el => el.setAttribute('inert', true));
+                } else {
                     evaluationResultsPage.style.display = 'none';
                     evaluationResultsPage.setAttribute('inert', true);
-                    document.querySelectorAll('.inert').forEach(el=>el.removeAttribute('inert'));
+                    document.querySelectorAll('.inert').forEach(el => el.removeAttribute('inert'));
                 }
                 menuBtn.setAttribute('aria-expanded', show);
-                menuBtn.setAttribute('aria-label', show?'Ocultar resumo dos testes de conformidade':'Mostrar resumo dos testes de conformidade');
+                menuBtn.setAttribute('aria-label', show ? 'Ocultar resumo dos testes de conformidade' : 'Mostrar resumo dos testes de conformidade');
                 menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
             }
         });
-        if(!!evaluationResultsPage){
+        if (!!evaluationResultsPage) {
             evaluationResultsPage.style.display = 'none';
         }
         menuEl.appendChild(menuItemResults);
 
-        evaluationResultsPage.querySelectorAll('a.test-item, a.test-group').forEach(link=>{
-            link.addEventListener('click', e=>{
+        evaluationResultsPage.querySelectorAll('a.test-item, a.test-group').forEach(link => {
+            link.addEventListener('click', e => {
                 e.preventDefault();
                 e.stopPropagation();
                 menuItemResults.setAttribute('aria-expanded', 'true');
                 menuItemResults.click();
                 const destinationEl = document.querySelector(e.currentTarget.getAttribute('href'));
-                if(!!destinationEl){
-                    requestAnimationFrame(()=>{
+                if (!!destinationEl) {
+                    requestAnimationFrame(() => {
                         destinationEl.scrollIntoView();
                         destinationEl.focus();
                     });
@@ -139,11 +154,11 @@ export default ()=>{
         evaluationResultsPage.parentElement.insertBefore(menuContainer, evaluationResultsPage);
 
         evaluationResultsPage.addEventListener('keyup', (e) => {
-            if (e.defaultPrevented && menuItemResults.getAttribute('aria-expanded')!=='true') return; // Do nothing if event already handled
+            if (e.defaultPrevented && menuItemResults.getAttribute('aria-expanded') !== 'true') return; // Do nothing if event already handled
 
-            if(e.key === 'Escape'){
+            if (e.key === 'Escape') {
                 menuItemResults.click();
-                requestAnimationFrame(()=>{
+                requestAnimationFrame(() => {
                     menuItemResults.focus();
                 });
                 e.preventDefault();
@@ -152,16 +167,14 @@ export default ()=>{
 
         // Some trigonometry to position the menu item in the radial menu
         const PI = Math.PI;
-        const minAngle=260;
-        const maxAngle=440;
-        const step=(maxAngle-minAngle)/menuEl.children.length;
-        Array.from(menuEl.children).forEach((el, index)=>{
-            const angle = minAngle+index*step;
-            el.style.setProperty('--xC', Math.cos(angle * PI / 180 -PI / 2));
-            el.style.setProperty('--yC', Math.sin(angle * PI / 180 -PI / 2));
+        const minAngle = 260;
+        const maxAngle = 440;
+        const step = (maxAngle - minAngle) / menuEl.children.length;
+        Array.from(menuEl.children).forEach((el, index) => {
+            const angle = minAngle + index * step;
+            el.style.setProperty('--xC', Math.cos(angle * PI / 180 - PI / 2));
+            el.style.setProperty('--yC', Math.sin(angle * PI / 180 - PI / 2));
         });
-
-        new Menu(menuEl);
 
         menuContainer.appendChild(menuEl);
 
@@ -174,19 +187,19 @@ export default ()=>{
         menuBtn.setAttribute('aria-label', 'Mostrar menu');
         menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
         menuBtn.classList.add('menu-button', 'no-print');
-        menuBtn.addEventListener('click', e=>{
+        menuBtn.addEventListener('click', e => {
             const menuBtn = e.currentTarget;
-            const show = e.currentTarget.getAttribute('aria-expanded')==='false';
+            const show = e.currentTarget.getAttribute('aria-expanded') === 'false';
             const menu = document.getElementById(menuBtn.getAttribute('aria-controls'));
             menuBtn.setAttribute('aria-expanded', show);
-            menuBtn.setAttribute('aria-label', show?'Ocultar menu':'Mostrar menu');
+            menuBtn.setAttribute('aria-label', show ? 'Ocultar menu' : 'Mostrar menu');
             menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
-            if(!!menu){
+            if (!!menu) {
                 menu.classList.toggle('open', show);
                 menu.setAttribute('aria-hidden', !show);
-                if(show){
+                if (show) {
                     menu.removeAttribute('inert');
-                }else{
+                } else {
                     menu.setAttribute('inert', true);
                 }
             }
@@ -222,14 +235,16 @@ export default ()=>{
         `;
         menuBtn.appendChild(menuBtnIcon);
         menuContainer.insertBefore(menuBtn, menuEl);
+
+        new Menu(menuEl);
     }
 
-    const updateScrollWidth = ()=>{
-        requestAnimationFrame(()=>{
+    const updateScrollWidth = () => {
+        requestAnimationFrame(() => {
             document.body.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.offsetWidth) + 'px');
         });
     };
-    window.addEventListener('resize',updateScrollWidth);
+    window.addEventListener('resize', updateScrollWidth);
     document.addEventListener('DOMContentLoaded', updateScrollWidth);
     window.addEventListener('load', updateScrollWidth);
     updateScrollWidth();
