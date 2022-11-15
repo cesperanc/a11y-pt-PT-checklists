@@ -97,12 +97,14 @@ export default ()=>{
                 evaluationResultsPage.setAttribute('aria-hidden', !show);
                 evaluationResultsPage.classList.toggle('open', show);
                 if(show){
+                    evaluationResultsPage.style.removeProperty('display');
                     evaluationResultsPage.removeAttribute('inert');
                     // requestAnimationFrame(()=>{
                     //     evaluationResultsPage.focus();
                     // });
                     document.querySelectorAll('.inert').forEach(el=>el.setAttribute('inert', true));
                 }else{
+                    evaluationResultsPage.style.display = 'none';
                     evaluationResultsPage.setAttribute('inert', true);
                     document.querySelectorAll('.inert').forEach(el=>el.removeAttribute('inert'));
                 }
@@ -111,6 +113,9 @@ export default ()=>{
                 menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
             }
         });
+        if(!!evaluationResultsPage){
+            evaluationResultsPage.style.display = 'none';
+        }
         menuEl.appendChild(menuItemResults);
 
         evaluationResultsPage.querySelectorAll('a.test-item, a.test-group').forEach(link=>{
