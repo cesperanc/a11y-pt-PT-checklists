@@ -116,15 +116,9 @@ class App {
             }
 
             window.addEventListener("beforeunload", (ev)=>{
-                console.log(JSON.stringify(App.getFormData()));
-                console.log(JSON.stringify(history.state?.[App.getInstance().#historyKey]));
-
                 if(App.isDirty()){
                     ev.returnValue = 'Alguns dados poderão não ser guardados. Pretende continuar?';
                     ev.preventDefault();
-                    // if(confirm('Alguns dados poderão não ser guardados. Pretende continuar?')){
-                    //     
-                    // }
                 }
             }, {capture: true});
         }
