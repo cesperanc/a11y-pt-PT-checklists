@@ -115,12 +115,12 @@ class App {
                 }
             }
 
-            window.addEventListener("beforeunload", (ev)=>{
-                if(App.isDirty()){
-                    ev.returnValue = 'Alguns dados poderão não ser guardados. Pretende continuar?';
-                    ev.preventDefault();
-                }
-            }, {capture: true});
+            // window.addEventListener("beforeunload", (ev)=>{
+            //     if(App.isDirty()){
+            //         ev.returnValue = 'Alguns dados poderão não ser guardados. Pretende continuar?';
+            //         ev.preventDefault();
+            //     }
+            // }, {capture: true});
         }
     }
 

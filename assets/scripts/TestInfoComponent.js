@@ -34,15 +34,15 @@ class TestInfo extends HTMLElement {
                             <div class="test-results-wrapper">
                                 <div class="test-result-option test-result-positive" role="presentation">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_P">
-                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_P" for="testResult_group_\${groupId}_test_\${testId}_P" role="presentation" tabindex="-1">Positivo</label>
+                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_P" for="testResult_group_\${groupId}_test_\${testId}_P" tabindex="-1">Positivo</label>
                                 </div>
                                 <div class="test-result-option test-result-negative" role="presentation">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_N" name="testResult['group_\${groupId}']['test_\${testId}']" value="N" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_N">
-                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_N"for="testResult_group_\${groupId}_test_\${testId}_N" role="presentation" tabindex="-1">Negativo</label>
+                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_N"for="testResult_group_\${groupId}_test_\${testId}_N" tabindex="-1">Negativo</label>
                                 </div>
                                 <div class="test-result-option test-result-not-applicable" role="presentation">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_NA" name="testResult['group_\${groupId}']['test_\${testId}']" value="NA" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_NA">
-                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_NA" for="testResult_group_\${groupId}_test_\${testId}_NA" role="presentation" tabindex="-1">Não aplicável</label>
+                                    <label id="testResult_group_\${groupId}_test_\${testId}_label_NA" for="testResult_group_\${groupId}_test_\${testId}_NA" tabindex="-1">Não aplicável</label>
                                 </div>
                             </div>
                         </fieldset>
@@ -53,7 +53,7 @@ class TestInfo extends HTMLElement {
                         <div class="file-previews-input-wrapper">
                             <label class="block" for="testFacts_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_facts_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_facts_label" class="test-results-facts-labels test-results-label">Evidências</h4></label>
                             <input type="file" id="testFacts_group_\${groupId}_test_\${testId}" data-controls="testFacts_group_\${groupId}_test_\${testId}_data" multiple accept="image/*">
-                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden title="Carregar imagens com as evidências" aria-label="Carregar imagens com as evidências">Carregar imagens</button>
+                            <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden aria-labelledby="testFacts_group_\${groupId}_test_\${testId}_btn_label test-name_\${groupId}_test_\${testId}" ><span id="testFacts_group_\${groupId}_test_\${testId}_btn_label" aria-role="presentation"  aria-hidden="true">Carregar imagens<span class="visually-hidden"> com as evidências</span></span></button>
                             <input type="hidden" class="file-mirror" id="testFacts_group_\${groupId}_test_\${testId}_data" name="testFacts['group_\${groupId}']['test_\${testId}']" value="">
                         </div>
                         <div class="file-previews" data-empty-message="Não foram apresentadas evidências"></div>
@@ -167,7 +167,7 @@ class TestInfo extends HTMLElement {
                                 removeButton.classList.add('remove-image');
                                 removeButton.setAttribute('type', 'button');
                                 removeButton.setAttribute('title', `Remover a imagem "${image?.name}".`);
-                                removeButton.setAttribute('aria-label', button.getAttribute('title'));
+                                removeButton.setAttribute('aria-label', removeButton.getAttribute('title'));
                                 removeButton.innerHTML = `<svg role="presentation" width="24" height="24" version='1.1' viewBox='0 0 122 122' xmlns='http://www.w3.org/2000/svg'><path d='m5.5643 36.223c-4.6005-4.4976-8.3065-7.3272-2.5345-12.881l18.615-18.012c5.8997-5.9124 9.3501-5.6168 14.909 0l25.026 24.853 24.941-24.727c4.5579-4.5821 7.3907-8.2562 12.992-2.5339l18.125 18.455c5.9636 5.8491 5.6654 9.2909 0 14.781l-24.983 24.811 24.983 24.853c5.6442 5.4479 5.9423 8.8897 0 14.781l-18.189 18.455c-5.6016 5.7224-8.5195 2.1116-12.992-2.5128l-24.877-24.832-25.09 24.938c-5.4951 5.5745-8.9455 5.8702-14.909 0l-18.615-18.012c-5.772-5.5534-2.1299-8.4463 2.5345-12.881l25.026-24.79z' fill='#1C1C1C' stroke-width='2.1207'/></svg>`;
                                 removeButton.addEventListener('click', (e)=>{
                                     try{

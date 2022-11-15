@@ -528,6 +528,9 @@ fieldset {
     overflow: hidden;
     white-space: nowrap;
     clip-path: inset(50%);
+    clip: rect(0 0 0 0);
+    position: absolute;
+    display: inline-block;
     margin: -1px;
     padding: 0;
     border: 0 none;
@@ -1090,7 +1093,7 @@ test-info+test-info::before {
     stroke: #EBEBEB;
 }
 .menu-button .burger-btn-icon .donut-segment{
-    --circumference: 120;
+    --circumference: 120px;
     stroke: var(--main-color);
     stroke-dasharray: calc(var(--progress, 0)*(var(--circumference, 1)/100)) calc(var(--circumference, 1) - (var(--progress, 0)*(var(--circumference, 1)/100)));
     stroke-dashoffset: calc(var(--circumference, 0)*25/100);
