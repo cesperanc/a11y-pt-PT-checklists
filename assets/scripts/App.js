@@ -13,6 +13,7 @@ class App {
     #tests = [];
     #version = '';
     #form = null;
+    #historyKey = 'checklist_history';
 
     constructor(config, version, formSelector) {
         if (App.#instance !== null) {
@@ -26,6 +27,7 @@ class App {
             InputFields();
             AppMenu(this);
             App.loadTests(config, version);
+            App.#handleHistory();
         });
     }
 
@@ -58,6 +60,100 @@ class App {
                 callback();
             }
         }
+    }
+
+    static #handleHistory(){
+        if('history' in window){
+            App.getForm().addEventListener('change', (e)=>{
+                const app = App.getInstance();
+                const historyState = history.state?.[app.#historyKey];
+                if(!historyState){
+                    history.replaceState({ [app.#historyKey]: App.getFormData() }, '');
+                }else{
+                    if(e.target.name.length>0){
+                        history.replaceState({ [app.#historyKey]: Object.assign(historyState, {
+                            [e.target.name]:
+                                e.target.type!=='file' && ((e.target.type==='hidden' && !e.target.classList.contains('file-mirror')) || e.target.type!=='hidden')?
+                                (new FormData(app.#form)).get(e.target.name):
+                                ''
+                        }) }, '');
+                    }
+                }
+            });
+            
+            const app = App.getInstance();
+            const historyState = history.state?.[app.#historyKey];
+            if(history.state && !!historyState){
+                for ( let formItemKey in historyState ) {
+                    if(historyState[formItemKey] && historyState[formItemKey].length>0){
+                        const inputs = app.#form.querySelectorAll(`[name="${formItemKey}"]`);
+                        if(inputs.length>0){
+                            inputs.forEach(input => {
+                                let triggerChange = false;
+                                switch(input.type){
+                                    case 'file':
+                                        break;
+                                    case 'radio':
+                                    case 'checkbox':
+                                        if(input.value===historyState[formItemKey]){
+                                            input.checked = true;
+                                            triggerChange = true;
+                                        }
+                                        break;
+    
+                                    default:
+                                        input.value = historyState[formItemKey];
+                                        triggerChange = true;
+                                }
+    
+                                if(triggerChange){
+                                    input.dispatchEvent(new Event('change'));
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            window.addEventListener("beforeunload", (ev)=>{
+                console.log(JSON.stringify(App.getFormData()));
+                console.log(JSON.stringify(history.state?.[App.getInstance().#historyKey]));
+
+                if(App.isDirty()){
+                    ev.returnValue = 'Alguns dados poderão não ser guardados. Pretende continuar?';
+                    ev.preventDefault();
+                    // if(confirm('Alguns dados poderão não ser guardados. Pretende continuar?')){
+                    //     
+                    // }
+                }
+            }, {capture: true});
+        }
+    }
+
+    static isDirty(){
+        const formData = App.getFormData();
+        const historyData = history.state?.[App.getInstance().#historyKey];
+
+        // Types don't match
+        if(typeof formData !== typeof historyData){
+            return true;
+        }
+
+        const formDataKeys = Object.keys(formData).filter(key=>key!=='');
+        const historyDataKeys = Object.keys(historyData).filter(key=>key!=='');
+        // The keys don't match
+        if(formDataKeys.filter(x => !historyDataKeys.includes(x)).concat(historyDataKeys.filter(x => !formDataKeys.includes(x))).length>0){
+            return true;
+        }
+        
+        // Values don't match
+        for ( let dataItemKey in formData ) {
+            if(formData?.[dataItemKey] !== historyData?.[dataItemKey]){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     loadTests(config, version) {

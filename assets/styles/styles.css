@@ -1031,8 +1031,8 @@ test-info+test-info::before {
 .app-menu-container{
     --btnSize: 60px;
     position: fixed;
-    right: calc(5px + var(--scrollbar-width, 0));
-    bottom: 5px;
+    right: calc(30px + var(--scrollbar-width, 0));
+    bottom: 15px;
     z-index: 100;
 }
 
@@ -1056,16 +1056,16 @@ test-info+test-info::before {
     transition: box-shadow 0.2s ease-in-out;
 }
 .app-menu-container:has(.menu-entry-results[aria-expanded="true"]){
-    right: calc(5px + var(--scrollbar-width, 0));
+    right: calc(30px + var(--scrollbar-width, 0));
 }
 @media screen and (min-width: 1250px) {
     .app-menu-container {
         --btnSize: 80px;
-        right: calc(5px + var(--scrollbar-width, 0));
+        right: calc(15px + var(--scrollbar-width, 0));
         bottom: 20px;
     }
     .app-menu-container:has(.menu-entry-results[aria-expanded="true"]){
-        right: calc(5px + 2 * var(--scrollbar-width, 0));
+        right: calc(15px + 2 * var(--scrollbar-width, 0));
     }
 }
 
