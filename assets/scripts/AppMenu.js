@@ -1,4 +1,5 @@
 import Menu from "./MenuA11y.js";
+import App from "./App.js";
 
 export default ()=>{
     const evaluationResultsPage = document.getElementById('evaluationResultsPage');
@@ -15,6 +16,7 @@ export default ()=>{
         menuEl.setAttribute('aria-hidden', 'true');
         menuEl.setAttribute('inert', true);
 
+        const menuBtn = document.createElement('button');
 
         // Save button
         const menuItemSave = document.createElement('li');
@@ -27,7 +29,8 @@ export default ()=>{
         menuItemSave.setAttribute('title', menuItemSave.getAttribute('aria-label'));
         menuItemSave.addEventListener('click', e=>{
             e.preventDefault();
-            console.log("Save");
+            App.saveFile();
+            menuBtn.dispatchEvent(new Event('click'));
         });
         menuEl.appendChild(menuItemSave);
 
@@ -42,7 +45,8 @@ export default ()=>{
         menuItemImport.setAttribute('title', menuItemImport.getAttribute('aria-label'));
         menuItemImport.addEventListener('click', e=>{
             e.preventDefault();
-            console.log("Importar");
+            App.openFile()
+            menuBtn.dispatchEvent(new Event('click'));
         });
         menuEl.appendChild(menuItemImport);
 
@@ -156,7 +160,6 @@ export default ()=>{
 
         menuContainer.appendChild(menuEl);
 
-        const menuBtn = document.createElement('button');
         menuBtn.setAttribute('id', 'menuBtn');
         menuBtn.setAttribute('accesskey', 'm');
         menuBtn.setAttribute('type', 'button');
@@ -217,7 +220,9 @@ export default ()=>{
     }
 
     const updateScrollWidth = ()=>{
-        document.body.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.offsetWidth) + 'px');
+        requestAnimationFrame(()=>{
+            document.body.style.setProperty('--scrollbar-width', (window.innerWidth - document.documentElement.offsetWidth) + 'px');
+        });
     };
     window.addEventListener('resize',updateScrollWidth);
     document.addEventListener('DOMContentLoaded', updateScrollWidth);

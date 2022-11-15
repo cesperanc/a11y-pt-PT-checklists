@@ -112,8 +112,11 @@ export default ()=>{
                 const testResultItem = document.createElement('span');
                 testResultItem.classList.add('test-result-item', `test-result-item-${radio.value}`);
                 testResultItem.innerText = radio.value;
-                testResultItem.setAttribute('aria-label', testResults.querySelector(`label[for="${radio.id}"]`)?.innerText||'');
-                testResultItem.setAttribute('title', testResultItem.getAttribute('aria-label')||'');
+                requestAnimationFrame(()=>{
+                    const label = testResults.querySelector(`label[for="${radio.id}"]`)?.innerText||'';
+                    testResultItem.setAttribute('aria-label', label);
+                    testResultItem.setAttribute('title', label);
+                });
                 testResultsContainer.appendChild(testResultItem);
             });
         }
@@ -160,9 +163,11 @@ export default ()=>{
                         testResultItem.setAttribute('id', `${radio.id}_state_info`);
                         testResultItem.setAttribute('aria-current', radio.checked);
                         testResultItem.setAttribute('aria-hidden', !radio.checked);
-                        const label = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText||'';
-                        testResultItem.setAttribute('aria-label', `Resultado do teste: ${(label)}`);
-                        testResultItem.setAttribute('title', label);
+                        requestAnimationFrame(()=>{
+                            const label = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText||'';
+                            testResultItem.setAttribute('aria-label', `Resultado do teste: ${(label)}`);
+                            testResultItem.setAttribute('title', label);
+                        });
                         radio.addEventListener('change', (e)=>{
                             testResultItem.setAttribute('aria-current', e.currentTarget.checked);
                             testResultItem.setAttribute('aria-hidden', !radio.checked);

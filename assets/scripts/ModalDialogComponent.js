@@ -108,7 +108,9 @@ class ModalDialog extends HTMLElement {
 
     scrollTrack(){
         const updateScrollWidth = ()=>{
-            this.#paddingRight = (window.innerWidth - document.documentElement.offsetWidth) + 'px';
+            requestAnimationFrame(()=>{
+                this.#paddingRight = (window.innerWidth - document.documentElement.offsetWidth) + 'px';
+            });
         };
         window.addEventListener('resize',updateScrollWidth);
         document.addEventListener('DOMContentLoaded', updateScrollWidth);

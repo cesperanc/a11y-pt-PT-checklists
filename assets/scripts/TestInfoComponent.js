@@ -108,6 +108,7 @@ class TestInfo extends HTMLElement {
             if (!!fileInputData) {
                 fileInputData.addEventListener('change', e => {
                     try {
+                        if(e.currentTarget.value.length<=0) return ;
                         const images = JSON.parse(e.currentTarget.value);
                         if (images.length > 0) {
                             images.forEach((image, index) => {
