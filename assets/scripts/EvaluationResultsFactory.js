@@ -5,6 +5,7 @@ export default ()=>{
     const menuBtn = document.getElementById('menuBtn');
     const menuBtnPercentage = menuBtn?.querySelector('.donut-percent');
     const menuBtnData = menuBtn?.querySelector('.donut-data');
+    const menuCompletion = menuBtn?.querySelector('#completion-info');
 
     return (tests)=>{
         if(!resultsContainer || !checkList || !Array.isArray(tests)) return;
@@ -89,6 +90,9 @@ export default ()=>{
                 }
                 if(!!menuBtnData){
                     menuBtnData.innerHTML = `${((numberOfTests-numberOfUntestedTests))}/${((numberOfTests))} testes`;
+                }
+                if(!!menuCompletion){
+                    menuCompletion.innerHTML = `${completedPercentage}% concluído. ${((numberOfTests-numberOfUntestedTests))} de ${((numberOfTests))} testes realizados.`;
                 }
             }
         };

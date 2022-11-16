@@ -212,10 +212,10 @@ export default () => {
         menuBtnIcon.classList.add('burger-btn-icon');
 
         menuBtnIcon.innerHTML = `
-            <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut" role="img" aria-label="Percentagem de conclusão">
+            <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut" role="img" aria-labelledby="completion-info">
                 <circle class="donut-hole" cx="20" cy="20" r="19" fill="#fff"></circle>
                 <g class="donut-text-wrapper">
-                    <g class="donut-text">
+                    <g class="donut-text" aria-hidden="true">
                         <text y="50%" transform="translate(0, 2)">
                             <tspan x="50%" text-anchor="middle" class="donut-percent">0%</tspan>   
                         </text>
@@ -236,6 +236,7 @@ export default () => {
                 <circle class="donut-ring" cx="20" cy="20" r="19" fill="transparent" stroke-width="3.5"></circle>
                 <circle class="donut-segment" cx="20" cy="20" r="19" fill="transparent" stroke-width="3.5" stroke-dasharray="0 120" stroke-dashoffset="30"></circle>
             </svg>
+            <span id="completion-info" class="visually-hidden" aria-live="polite"></span>
         `;
         menuBtn.appendChild(menuBtnIcon);
         menuContainer.insertBefore(menuBtn, menuEl);
