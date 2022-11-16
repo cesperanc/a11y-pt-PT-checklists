@@ -851,6 +851,10 @@ test-info+test-info::before {
         --progress: 0%;
     }
 
+    #evaluationResultsPage[aria-hidden="true"]{
+        display: none;
+    }
+
     #evaluationResultsPage .page{
         box-shadow: none;
         border: none;

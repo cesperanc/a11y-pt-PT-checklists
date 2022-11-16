@@ -112,14 +112,12 @@ export default () => {
                 evaluationResultsPage.setAttribute('aria-hidden', !show);
                 evaluationResultsPage.classList.toggle('open', show);
                 if (show) {
-                    evaluationResultsPage.style.removeProperty('display');
                     evaluationResultsPage.removeAttribute('inert');
                     // requestAnimationFrame(()=>{
                     //     evaluationResultsPage.focus();
                     // });
                     document.querySelectorAll('.inert').forEach(el => el.setAttribute('inert', true));
                 } else {
-                    evaluationResultsPage.style.display = 'none';
                     evaluationResultsPage.setAttribute('inert', true);
                     document.querySelectorAll('.inert').forEach(el => el.removeAttribute('inert'));
                 }
@@ -129,7 +127,7 @@ export default () => {
             }
         });
         if (!!evaluationResultsPage) {
-            evaluationResultsPage.style.display = 'none';
+            evaluationResultsPage.setAttribute('aria-hidden', true);
         }
         menuEl.appendChild(menuItemResults);
 
