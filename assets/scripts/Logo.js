@@ -1,3 +1,5 @@
+import App from "./App.js";
+
 export default ()=>{
     // Update logo
     const logoFileButton = document.getElementById('logoFileButton');
@@ -11,7 +13,7 @@ export default ()=>{
                     try {
                         const logo = JSON.parse(e.currentTarget.value);
                         image.src = logo?.data;
-                        image.alt = logo?.name;
+                        image.alt = logo?.name?.replace(/\.[^/.]+$/, '');
                     }catch(ex){};
                 });
             }
@@ -32,6 +34,7 @@ export default ()=>{
                             if(!!fileInputData){
                                 fileInputData.value = JSON.stringify({name: files[i].name, data: e.currentTarget.result});
                                 fileInputData.dispatchEvent(new Event('change'));
+                                App.toast(`Logótipo "${(files[i].name.replace(/\.[^/.]+$/, ''))}" carregado`);
                             }
                         });
                         imageReader.readAsDataURL(files[i]);

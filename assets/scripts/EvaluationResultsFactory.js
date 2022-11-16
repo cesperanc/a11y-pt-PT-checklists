@@ -143,6 +143,12 @@ export default ()=>{
                     testUlLiA.setAttribute('href', `#test-g${group.ID}-t${test.ID}`);
                     testUlLiA.classList.add('test-item');
 
+                    const testResultPrefix = document.createElement('span');
+                    testResultPrefix.classList.add('test-title-prefix');
+                    testResultPrefix.classList.add('visually-hidden');
+                    testResultPrefix.innerText = '';
+                    testUlLiA.appendChild(testResultPrefix);
+
                     const testLabel = document.createElement('span');
                     testLabel.classList.add('test-title');
                     testLabel.innerText = test.fullName??'';
@@ -161,20 +167,26 @@ export default ()=>{
                         testResultItem.classList.add('test-result-item', `test-result-item-${radio.value}`);
                         //testResultItem.innerText = radio.value;
                         testResultItem.setAttribute('id', `${radio.id}_state_info`);
-                        testResultItem.setAttribute('aria-current', radio.checked);
+                        testResultItem.setAttribute('data-current', radio.checked);
                         testResultItem.setAttribute('aria-hidden', !radio.checked);
                         requestAnimationFrame(()=>{
                             const label = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText||'';
                             testResultItem.setAttribute('aria-label', `Resultado do teste: ${(label)}`);
                             testResultItem.setAttribute('title', label);
+                            if(radio.checked){
+                                testResultPrefix.innerHTML = label+': ';
+                            }
                         });
                         radio.addEventListener('change', (e)=>{
-                            testResultItem.setAttribute('aria-current', e.currentTarget.checked);
+                            testResultItem.setAttribute('data-current', e.currentTarget.checked);
                             testResultItem.setAttribute('aria-hidden', !radio.checked);
+                            if(radio.checked){
+                                testResultPrefix.innerHTML = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText+': '||'';
+                            }
                             radios.filter(radio=>radio.value!==e.currentTarget.value).forEach(radio=>{
                                 const stateItem = document.getElementById(`${radio.id}_state_info`);
-                                if(!!stateItem && stateItem.getAttribute('aria-current')!=radio.checked){
-                                    stateItem.setAttribute('aria-current', radio.checked);
+                                if(!!stateItem && stateItem.getAttribute('data-current')!=radio.checked){
+                                    stateItem.setAttribute('data-current', radio.checked);
                                     stateItem.setAttribute('aria-hidden', !radio.checked);
                                 }
                             });

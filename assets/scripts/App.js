@@ -298,6 +298,35 @@ class App {
         document.body.appendChild(openFile);
         openFile.click();
     }
+
+    static toast(message, role='alert'){
+        const activeEl = document.activeElement;
+        const el = document.createElement("div");
+        el.setAttribute('id', "toast-" + Date.now());
+        el.classList.add("toast");
+        el.setAttribute("role", role);
+        el.setAttribute("tabIndex", '-1');
+        document.body.appendChild(el);
+        requestAnimationFrame(()=>{
+            el.innerHTML = message;
+            el.classList.add("show");
+            requestAnimationFrame(()=>{
+                el.focus();
+            });
+
+            window.setTimeout(()=>{
+                if(document.activeElement === el){
+                    requestAnimationFrame(()=>{
+                        activeEl.focus();
+                    });
+                }
+                el.classList.remove("show");
+                window.setTimeout(()=>{
+                    el.remove();
+                }, 1000);
+            }, 3000);
+        });
+    }
 }
 
 export default App;

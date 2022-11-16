@@ -201,6 +201,12 @@ export default () => {
                     menu.setAttribute('inert', true);
                 }
             }
+
+            if (e.defaultPrevented && menuItemResults.getAttribute('aria-expanded') !== 'true') return; // Do nothing if event already handled
+
+            if (!show && menuItemResults.getAttribute('aria-expanded') === 'true') {
+                menuItemResults.click();
+            }
         });
         const menuBtnIcon = document.createElement('span');
         menuBtnIcon.classList.add('burger-btn-icon');
