@@ -122,7 +122,7 @@ class TestInfo extends HTMLElement {
                                 const button = document.createElement("button");
                                 button.classList.add('thumbnail');
                                 button.setAttribute('type', 'button');
-                                button.setAttribute('title', `Ative o botão para ampliar a imagem "${image?.name}".`);
+                                button.setAttribute('title', `Ampliar a imagem "${image?.name}".`);
                                 button.setAttribute('aria-label', button.getAttribute('title'));
                                 button.innerHTML = `<img class="thumbnail" src="${image?.data}" alt="${image?.name}">`;
 
