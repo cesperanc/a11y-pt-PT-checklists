@@ -579,7 +579,7 @@ fieldset {
 .test-result-option input[type=radio]:focus+label,
 .test-result-option input[type=radio]:hover:not(:checked)+label {
     outline: 1px solid var(--border-active-color);
-    box-shadow: 0px 0px 20px var(--active-shadow-color);
+    box-shadow: 0px 0px 7px var(--active-shadow-color);
 }
 
 .test-result-option input[type=radio]:checked+label {
@@ -587,7 +587,7 @@ fieldset {
     color: var(--text-active-color);
 }
 .test-result-option input[type=radio]:checked:is(:hover, :focus-visible, :active)+label {
-    box-shadow: 0px 0px 20px var(--active-shadow-color);
+    box-shadow: 0px 0px 7px var(--active-shadow-color);
 }
 
 @media print{
@@ -743,11 +743,11 @@ fieldset {
     align-items: center;
     color: var(--text-color, black);
     background-color: transparent;
-    border: 1px solid #D3D3D3;
+    border: 1px solid var(--main-color, #41228e);
     border-radius: var(--border-radius, 10px);
     padding: 0.7rem 1.5rem;
     margin: 0.5rem 0;
-    box-shadow: 0px 3px 10px -2px rgb(161 170 166 / 50%);
+    /* box-shadow: 0px 3px 10px -2px rgb(161 170 166 / 50%); */
     font-size: .9rem;
     cursor: pointer;
     font-weight: bold;
@@ -823,7 +823,7 @@ test-info {
 test-info+test-info::before {
     content: ' ';
     display: block;
-    border-top: 2px solid #D3D3D3;
+    border-top: 1px solid #D3D3D3;
     width: calc(2 * var(--margin) + 100%);
     margin: 0 calc(-1 * var(--margin));
 }
