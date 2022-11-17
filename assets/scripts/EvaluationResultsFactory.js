@@ -212,5 +212,38 @@ export default ()=>{
             groupsUl.appendChild(groupLi);
         });
         resultsContainer.appendChild(groupsUl);
+
+        evaluationResultsPage.querySelectorAll('a.test-item, a.test-group').forEach(link => {
+            const menuItemResults = document.getElementById('resultsMenuItem');
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                menuItemResults.setAttribute('aria-expanded', 'true');
+                menuItemResults.click();
+                const destinationEl = document.querySelector(e.currentTarget.getAttribute('href'));
+                if (!!destinationEl) {
+                    requestAnimationFrame(() => {
+                        destinationEl.scrollIntoView();
+                        destinationEl.focus();
+                    });
+                }
+            });
+        });
+        evaluationResultsPage.setAttribute('aria-hidden', true);
+        evaluationResultsPage.setAttribute('inert', true);
+        evaluationResultsPage.setAttribute('tabindex', 0);
+
+        evaluationResultsPage.addEventListener('keyup', (e) => {
+            const menuItemResults = document.getElementById('resultsMenuItem');
+            if (e.defaultPrevented && menuItemResults.getAttribute('aria-expanded') !== 'true') return; // Do nothing if event already handled
+
+            if (e.key === 'Escape') {
+                menuItemResults.click();
+                requestAnimationFrame(() => {
+                    menuItemResults.focus();
+                });
+                e.preventDefault();
+            }
+        });
     };
 };
