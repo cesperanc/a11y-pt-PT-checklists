@@ -21,3 +21,12 @@ These forms can be used directly by visiting [cesperanc.github.io/a11y-pt-PT-che
 ## Where can I test it
 
 [cesperanc.github.io/a11y-pt-PT-checklists/](https://cesperanc.github.io/a11y-pt-PT-checklists/)
+
+
+## With the amazing contributions of: 
+
+* [Cláudio Esperança](https://www.linkedin.com/in/cesperanca/) as the Solutions Architect/Developer
+* [Joana Mineiro](https://www.linkedin.com/in/joanamineiro/) as the UX Designer
+* [Manuela Francisco](https://www.linkedin.com/in/manuela-francisco/) as the Accessibility Designer
+* [Norberto Sousa](https://comacesso.pt/) as the Accessibility Expert and Auditor
+* [Vitor Rodrigues](https://www.linkedin.com/in/vitor-rodrigues-a176a08a/) as the Boss
