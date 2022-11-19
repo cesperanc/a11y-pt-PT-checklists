@@ -118,12 +118,14 @@ export default () => {
                 evaluationResultsPage.setAttribute('aria-hidden', !show);
                 evaluationResultsPage.classList.toggle('open', show);
                 if (show) {
+                    evaluationResultsPage.setAttribute('tabindex', 0);
                     evaluationResultsPage.removeAttribute('inert');
                     // requestAnimationFrame(()=>{
                     //     evaluationResultsPage.focus();
                     // });
                     document.querySelectorAll('.inert').forEach(el => el.setAttribute('inert', true));
                 } else {
+                    evaluationResultsPage.removeAttribute('tabindex');
                     evaluationResultsPage.setAttribute('inert', true);
                     document.querySelectorAll('.inert').forEach(el => el.removeAttribute('inert'));
                 }

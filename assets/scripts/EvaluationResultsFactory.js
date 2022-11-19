@@ -231,7 +231,6 @@ export default ()=>{
         });
         evaluationResultsPage.setAttribute('aria-hidden', true);
         evaluationResultsPage.setAttribute('inert', true);
-        evaluationResultsPage.setAttribute('tabindex', 0);
 
         evaluationResultsPage.addEventListener('keyup', (e) => {
             const menuItemResults = document.getElementById('resultsMenuItem');
