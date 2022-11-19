@@ -846,24 +846,30 @@ test-info+test-info::before {
         box-sizing: border-box;
         height: 0;
         opacity: 1;
-        transition-property: padding, height, opacity;
+        transition-property: padding, height;
         transition-duration: 0.3s;
         transition-timing-function: ease-in-out;
+        padding-bottom: 3px;
+        border-bottom: 1px solid transparent;
 
         --progress: 0%;
-    }
-
-    #evaluationResultsPage[aria-hidden="true"] .page{
-        display: none;
     }
 
     #evaluationResultsPage .page{
         box-shadow: none;
         border: none;
         padding: 0 var(--margin);
+        transition: visibility 0s linear 0.3s;
+        visibility: hidden;
+    }
+
+    #evaluationResultsPage[aria-hidden="false"] .page{
+        transition: visibility 0s linear;
+        visibility: visible;
     }
 
     #evaluationResultsPage.open {
+        border-bottom: 1px solid rgba(211, 211, 211, 0.7);
         height: 100vh;
         opacity: 1;
         overflow: auto;
@@ -1206,10 +1212,12 @@ test-info+test-info::before {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: none;
+    transition: visibility 0s linear 0.3s;
+    visibility: hidden;
 }
 .app-menu[aria-hidden="false"]{
-    display: block;
+    transition: visibility 0s linear;
+    visibility: visible;
 }
 .app-menu::after{
     display: block;
