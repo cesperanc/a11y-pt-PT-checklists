@@ -213,7 +213,7 @@ export default () => {
                     </g>
                 </g>
                 <g class="donut-checklist" stroke-width=".70061" transform="matrix(1.6,0,0,1.6,-16,-15)">
-                    <g stroke="currentColor"><g stroke-width="1.3" stroke-linejoin="round"><circle cx="25.204" cy="19.857" r=".6" paint-order="markers stroke fill"/><circle cx="21.328" cy="21.179" r=".6" paint-order="markers stroke fill"/><circle cx="20.287" cy="24.997" r=".6" paint-order="markers stroke fill"/></g><circle cx="24.57" cy="24.342" r="1" stroke-width="2.165" paint-order="markers stroke fill" stroke-linejoin="round"/></g>
+                    <g stroke="currentColor" fill="currentColor"><g stroke-width="1.3" stroke-linejoin="round"><circle cx="25.204" cy="19.857" r=".6" paint-order="markers stroke fill"/><circle cx="21.328" cy="21.179" r=".6" paint-order="markers stroke fill"/><circle cx="20.287" cy="24.997" r=".6" paint-order="markers stroke fill"/></g><circle cx="24.57" cy="24.342" r="1" stroke-width="2.165" paint-order="markers stroke fill" stroke-linejoin="round"/></g>
                 </g>
                 <g class="closeIcon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2">
                     <path class="close-dash tl" d="m15 15 5 5"/>
