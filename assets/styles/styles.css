@@ -531,11 +531,13 @@ fieldset {
     clip-path: inset(50%);
     clip: rect(0 0 0 0);
     position: absolute;
-    display: inline-block;
     margin: -1px;
     padding: 0;
     border: 0 none;
     pointer-events: none;
+}
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    display: inline-block;
 }
 
 .test-result-option input[type=radio] {
