@@ -853,7 +853,7 @@ test-info+test-info::before {
         --progress: 0%;
     }
 
-    #evaluationResultsPage[aria-hidden="true"]{
+    #evaluationResultsPage[aria-hidden="true"] .page{
         display: none;
     }
 
@@ -1134,6 +1134,7 @@ test-info+test-info::before {
     stroke: var(--main-color);
     stroke-dasharray: calc(var(--progress, 0)*(var(--circumference, 1)/100)) calc(var(--circumference, 1) - (var(--progress, 0)*(var(--circumference, 1)/100)));
     stroke-dashoffset: calc(var(--circumference, 0)*25/100);
+    transition: stroke-dasharray 0.2s ease-in-out;
 }
 
 .menu-button .burger-btn-icon .donut-text-wrapper,
