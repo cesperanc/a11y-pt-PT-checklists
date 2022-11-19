@@ -224,7 +224,10 @@ export default ()=>{
                 if (!!destinationEl) {
                     requestAnimationFrame(() => {
                         destinationEl.scrollIntoView();
-                        destinationEl.focus();
+                        if(destinationEl.getAttribute('tabindex')===null){
+                            destinationEl.setAttribute('tabindex', -1);
+                        }
+                        requestAnimationFrame(()=>destinationEl.focus());
                     });
                 }
             });
