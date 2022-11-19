@@ -178,14 +178,14 @@ export default ()=>{
                             testResultItem.setAttribute('aria-label', `Resultado do teste: ${(label)}`);
                             testResultItem.setAttribute('title', label);
                             if(radio.checked){
-                                testResultPrefix.innerHTML = label+': ';
+                                testResultPrefix.innerHTML = label+':&nbsp; ';
                             }
                         });
                         radio.addEventListener('change', (e)=>{
                             testResultItem.setAttribute('data-current', e.currentTarget.checked);
                             testResultItem.setAttribute('aria-hidden', !radio.checked);
                             if(radio.checked){
-                                testResultPrefix.innerHTML = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText+': '||'';
+                                testResultPrefix.innerHTML = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText+':&nbsp; '||'';
                             }
                             radios.filter(radio=>radio.value!==e.currentTarget.value).forEach(radio=>{
                                 const stateItem = document.getElementById(`${radio.id}_state_info`);

@@ -31,7 +31,7 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-results" data-empty-message="O teste não foi executado">
                         <fieldset aria-labelledby="test-name_\${groupId}_test_\${testId}_results_label test-name_\${groupId}_test_\${testId}">
-                            <legend class="test-results-legend"><h4 id="test-name_\${groupId}_test_\${testId}_results_label" class="test-results-legend test-results-label">Resultado do teste<span class="visually-hidden">: </span></h4></legend>
+                            <legend class="test-results-legend"><h4 id="test-name_\${groupId}_test_\${testId}_results_label" class="test-results-legend test-results-label">Resultado do teste<span class="visually-hidden">:&nbsp; </span></h4></legend>
                             <div class="test-results-wrapper">
                                 <div class="test-result-option test-result-positive" role="presentation">
                                     <input type="radio" id="testResult_group_\${groupId}_test_\${testId}_P" name="testResult['group_\${groupId}']['test_\${testId}']" value="P" aria-labelledby="testResult_group_\${groupId}_test_\${testId}_label_P">
@@ -52,7 +52,7 @@ class TestInfo extends HTMLElement {
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-facts">
                         <div class="file-previews-input-wrapper">
-                            <label class="block" for="testFacts_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_facts_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_facts_label" class="test-results-facts-labels test-results-label">Evidências<span class="visually-hidden">: </span></h4></label>
+                            <label class="block" for="testFacts_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_facts_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_facts_label" class="test-results-facts-labels test-results-label">Evidências<span class="visually-hidden">:&nbsp; </span></h4></label>
                             <input type="file" id="testFacts_group_\${groupId}_test_\${testId}" data-controls="testFacts_group_\${groupId}_test_\${testId}_data" multiple accept="image/*">
                             <button type="button" data-controls="testFacts_group_\${groupId}_test_\${testId}" class="test-results-facts-browse-btn no-print" hidden aria-labelledby="testFacts_group_\${groupId}_test_\${testId}_btn_label test-name_\${groupId}_test_\${testId}" ><span id="testFacts_group_\${groupId}_test_\${testId}_btn_label" aria-role="presentation"  aria-hidden="true">Carregar imagens<span class="visually-hidden"> com as evidências. </span></span></button>
                             <input type="hidden" class="file-mirror" id="testFacts_group_\${groupId}_test_\${testId}_data" name="testFacts['group_\${groupId}']['test_\${testId}']" value="">
@@ -62,7 +62,7 @@ class TestInfo extends HTMLElement {
                 </div>
                 <div class="form-group-wrapper">
                     <div class="form-group test-result-notes">
-                        <label class="block" for="testNotes_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_notes_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_notes_label" class="test-results-notes test-results-label">Notas<span class="visually-hidden">: </span></h4></label>
+                        <label class="block" for="testNotes_group_\${groupId}_test_\${testId}" aria-labelledby="test-name_\${groupId}_test_\${testId}_notes_label test-name_\${groupId}_test_\${testId}"><h4 id="test-name_\${groupId}_test_\${testId}_notes_label" class="test-results-notes test-results-label">Notas<span class="visually-hidden">:&nbsp; </span></h4></label>
                         <textarea resizable class="block form-control no-print-if-js" data-controls="testNotes_group_\${groupId}_test_\${testId}_preview" id="testNotes_group_\${groupId}_test_\${testId}" name="testNotes['group_\${groupId}']['test_\${testId}']" rows="4"></textarea>
                         <div id="testNotes_group_\${groupId}_test_\${testId}_preview" class="test-result-notes-preview no-print-if-no-js show-only-when-printing" role="presentation" data-empty-message="Não foram adicionadas notas"></div>
                     </div>

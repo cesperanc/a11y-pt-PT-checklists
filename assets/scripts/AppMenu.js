@@ -126,6 +126,12 @@ export default () => {
                 menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
             }
         });
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'm') {
+                e.preventDefault();
+                menuItemResults.dispatchEvent(new Event('click'));
+            }
+        });
         if (!!evaluationResultsPage) {
             evaluationResultsPage.setAttribute('aria-hidden', true);
         }
