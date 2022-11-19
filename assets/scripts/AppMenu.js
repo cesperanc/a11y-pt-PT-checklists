@@ -29,8 +29,11 @@ export default () => {
         menuItemSave.setAttribute('title', menuItemSave.getAttribute('aria-label'));
         menuItemSave.addEventListener('click', e => {
             e.preventDefault();
-            App.saveFile();
             menuBtn.dispatchEvent(new Event('click'));
+            requestAnimationFrame(() => {
+                menuItemSave.focus();
+            });
+            App.saveFile();
         });
         menuEl.appendChild(menuItemSave);
         document.addEventListener('keydown', e => {
@@ -51,8 +54,11 @@ export default () => {
         menuItemImport.setAttribute('title', menuItemImport.getAttribute('aria-label'));
         menuItemImport.addEventListener('click', e => {
             e.preventDefault();
-            App.openFile()
             menuBtn.dispatchEvent(new Event('click'));
+            requestAnimationFrame(() => {
+                menuItemImport.focus();
+            });
+            App.openFile();
         });
         menuEl.appendChild(menuItemImport);
         document.addEventListener('keydown', e => {
