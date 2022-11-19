@@ -129,7 +129,11 @@ export default () => {
         document.addEventListener('keydown', e => {
             if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'm') {
                 e.preventDefault();
+                menuBtn.dispatchEvent(new Event('click'));
                 menuItemResults.dispatchEvent(new Event('click'));
+                requestAnimationFrame(() => {
+                    menuItemResults.focus();
+                });
             }
         });
         if (!!evaluationResultsPage) {
