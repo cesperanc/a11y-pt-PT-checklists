@@ -130,7 +130,7 @@ export default () => {
                     document.querySelectorAll('.inert').forEach(el => el.removeAttribute('inert'));
                 }
                 menuBtn.setAttribute('aria-expanded', show);
-                menuBtn.setAttribute('aria-label', show ? 'Ocultar resumo dos testes de conformidade' : 'Mostrar resumo dos testes de conformidade');
+                menuBtn.setAttribute('aria-label', show ? 'Ocultar resumo dos testes de conformidade; pressionar a tecla Tab para ir para o resumo' : 'Mostrar resumo dos testes de conformidade');
                 menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
             }
         });

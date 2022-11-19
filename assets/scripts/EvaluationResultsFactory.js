@@ -20,7 +20,7 @@ export default ()=>{
             <caption><h3>Resumo dos testes de conformidade</h3></caption>
             <tbody>
                 <tr>
-                    <th scope="row">Bateria de testes</th>
+                    <th scope="row">Total de heurísticas</th>
                     <td id="number-of-tests"></td>
                 </tr>
                 <tr>
@@ -28,12 +28,12 @@ export default ()=>{
                     <td id="number-of-successful-tests"></td>
                 </tr>
                 <tr>
-                    <th scope="row">Testes não aplicáveis</th>
-                    <td id="number-of-unappliable-tests"></td>
-                </tr>
-                <tr>
                     <th scope="row">Testes não conformes</th>
                     <td id="number-of-failed-tests"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Testes não aplicáveis</th>
+                    <td id="number-of-unappliable-tests"></td>
                 </tr>
                 <tr>
                     <th scope="row">Testes não avaliados</th>
