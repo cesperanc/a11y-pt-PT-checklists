@@ -115,6 +115,8 @@ class App {
                 }
             }
 
+            // Uncomment to enable data loss warning when leaving the form
+            // 
             // window.addEventListener("beforeunload", (ev)=>{
             //     if(App.isDirty()){
             //         ev.returnValue = 'Alguns dados poderão não ser guardados. Pretende continuar?';
