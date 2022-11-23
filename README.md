@@ -2,7 +2,7 @@
 
 [![License: GPL v3+](https://img.shields.io/badge/License-GPL%20v3%2B-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This project provides forms to evaluate site accessibility and usability accordingly to the [Usability and Accessibilty verification lists](https://amagovpt.github.io/kit-selo/checklists/) promoted by [AMA](https://www.acessibilidade.gov.pt/). 
+This project provides forms to evaluate site accessibility and usability accordingly to the [Usability and Accessibility verification lists](https://amagovpt.github.io/kit-selo/checklists/) promoted by [AMA](https://www.acessibilidade.gov.pt/). 
 
 These forms can be used directly by visiting [cesperanc.github.io/a11y-pt-PT-checklists/](https://cesperanc.github.io/a11y-pt-PT-checklists/). The project is also opensource, so you can fork it and customize it to your own needs and requirements. 
 
