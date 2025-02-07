@@ -135,11 +135,23 @@ const Config = normalize({
             ]
         },
         {
-            groupName: `Sintaxe do HTML`,
+            groupName: `Modais`,
             tests: [
                 {
-                    name: `A página apresenta-se sem erros de (x)HTML`,
-                    description: `A página não deve apresentar erros de sintaxe de (x)HTML.`,
+                    name: `Quando a caixa de diálogo é aberta, o foco (cursor do Browser) move-se para um elemento dentro da caixa de diálogo`,
+                    description: `Assim que a caixa de edição se sobrepõe à janela, o cursor do Browser deve saltar para dentro da caixa de diálogo.`,
+                },
+                {
+                    name: `Quando uma caixa de diálogo está aberta, a navegação com teclado (Browser ou Tecnologia de apoio) tem de ficar circunscrita aos elementos que compõem a caixa de diálogo`,
+                    description: `Quando a caixa de diálogo está aberta, todos os outros elementos que se encontram fora da caixa devem permanecer inertes. Mesmo os elementos interativos (links, botões ou campos de edição) devem deixar de ser focáveis quer com teclado quer com o rato. Quando a caixa de diálogo está aberta, se ativar um leitor de ecrã e ele efetuar a leitura ou permitir focar elementos interativos que estão fora da caixa de diálogo, algo está errado.`,
+                },
+                {
+                    name: `A caixa de diálogo tem de ter um mecanismo que permita sair ou fechar a caixa, quer através de teclado quer através de um dispositivo apontador`,
+                    description: `A caixa de diálogo deve ter um mecanismo que permita sair ou fechar a caixa. Pode ser um botão "Fechar". Para além do botão "Fechar" é possível adicionar a tecla de atalho "ESC".`,
+                },
+                {
+                    name: `Quando a caixa de diálogo fecha, o foco (cursor do Browser) deve voltar ao elemento interativo que a invocou`,
+                    description: `É útil que ao sair da modal, o utilizador seja posicionado no elemento que usou para invocar a modal. A modal é uma espécie de parêntesis, à conversa principal. É bom que o utilizador, depois do "parêntesis", possa voltar à conversa principal, no exato ponto onde a deixou.`,
                 },
             ]
         },
