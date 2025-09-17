@@ -1,4 +1,4 @@
-import App from "./App.js";
+import App from "./App-0.0.1.js";
 
 export default ()=>{
     // Update logo

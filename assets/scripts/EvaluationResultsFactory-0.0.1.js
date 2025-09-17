@@ -100,14 +100,15 @@ export default ()=>{
 
         const testResultsWrapper = document.createElement('div');
         testResultsWrapper.classList.add('final-test-results-wrapper', 'test-results-labels');
-        testResultsWrapper.setAttribute('role', 'presentation');
-        testResultsWrapper.setAttribute('aria-hidden', true);
 
         const testResultsTitle = document.createElement('h3');
+        testResultsTitle.setAttribute('id', 'test-results-label');
         testResultsTitle.innerText = 'Detalhes dos testes';
         testResultsWrapper.appendChild(testResultsTitle);
 
         const testResultsContainer = document.createElement('span');
+        testResultsContainer.setAttribute('role', 'presentation');
+        testResultsContainer.setAttribute('aria-hidden', true);
         testResultsContainer.classList.add('test-results-container');
 
         const testResults = document.querySelector('.test-info .form-group.test-results');
@@ -128,8 +129,23 @@ export default ()=>{
 
         resultsContainer.appendChild(testResultsWrapper);
 
+        const updateTestOptionValue = (radio)=>{
+            if(radio?.checked){
+                switch(radio.value){
+                    case 'P':
+                        return '&check;';
+                    case 'N':
+                        return '&#10007;';
+                    case 'NA':
+                        return '&bull;';
+                }
+            }
+            return '';
+        };
+
         const groupsUl = document.createElement('ul');
         groupsUl.classList.add('test-groups');
+        groupsUl.setAttribute('aria-labelledby', 'test-results-label');
         tests.forEach(group => {
             const groupLi = document.createElement('li');
             const groupLiA = document.createElement('a');
@@ -177,6 +193,7 @@ export default ()=>{
                             const label = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText||'';
                             testResultItem.setAttribute('aria-label', `Resultado do teste: ${(label)}`);
                             testResultItem.setAttribute('title', label);
+                            testResultItem.innerHTML = updateTestOptionValue(radio);
                             if(radio.checked){
                                 testResultPrefix.innerHTML = label+':&nbsp;';
                             }
@@ -184,6 +201,7 @@ export default ()=>{
                         radio.addEventListener('change', (e)=>{
                             testResultItem.setAttribute('data-current', e.currentTarget.checked);
                             testResultItem.setAttribute('aria-hidden', !radio.checked);
+                            testResultItem.innerHTML = updateTestOptionValue(radio);
                             if(radio.checked){
                                 testResultPrefix.innerHTML = document.querySelector(`#test-g${group.ID}-t${test.ID}-wrapper .test-results label[for="${radio.id}"]`)?.innerText+':&nbsp;'||'';
                             }
@@ -192,6 +210,7 @@ export default ()=>{
                                 if(!!stateItem && stateItem.getAttribute('data-current')!=radio.checked){
                                     stateItem.setAttribute('data-current', radio.checked);
                                     stateItem.setAttribute('aria-hidden', !radio.checked);
+                                    stateItem.innerHTML = updateTestOptionValue(radio);
                                 }
                             });
 
@@ -232,8 +251,8 @@ export default ()=>{
                 }
             });
         });
-        evaluationResultsPage.setAttribute('aria-hidden', true);
         evaluationResultsPage.setAttribute('inert', true);
+        evaluationResultsPage.setAttribute('aria-hidden', true);
 
         evaluationResultsPage.addEventListener('keyup', (e) => {
             const menuItemResults = document.getElementById('resultsMenuItem');

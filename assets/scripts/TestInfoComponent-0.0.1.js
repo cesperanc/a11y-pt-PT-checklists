@@ -1,5 +1,5 @@
-import { TagName as ModalDialog } from "./ModalDialogComponent.js";
-import App from "./App.js";
+import { TagName as ModalDialog } from "./ModalDialogComponent-0.0.1.js";
+import App from "./App-0.0.1.js";
 
 export const TagName = 'test-info';
 class TestInfo extends HTMLElement {

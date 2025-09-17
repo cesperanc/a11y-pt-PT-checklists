@@ -1,5 +1,5 @@
-import Menu from "./MenuA11y.js";
-import App from "./App.js";
+import Menu from "./MenuA11y-0.0.1.js";
+import App from "./App-0.0.1.js";
 
 export default () => {
     const evaluationResultsPage = document.getElementById('evaluationResultsPage');
@@ -13,8 +13,8 @@ export default () => {
         menuEl.setAttribute('role', 'menu');
         menuEl.setAttribute('aria-label', 'Menu de ferramentas');
         menuEl.setAttribute('title', menuEl.getAttribute('aria-label'));
-        menuEl.setAttribute('aria-hidden', 'true');
         menuEl.setAttribute('inert', true);
+        menuEl.setAttribute('aria-hidden', 'true');
 
         const menuBtn = document.createElement('button');
 
@@ -43,7 +43,7 @@ export default () => {
             }
         });
 
-        // Save button
+        // Import button
         const menuItemImport = document.createElement('li');
         menuItemImport.setAttribute('id', 'importMenuItem');
         menuItemImport.classList.add('menu-entry-item', 'menu-entry-import');
@@ -115,7 +115,6 @@ export default () => {
                         document.body.style.removeProperty('overflow');
                     }
                 }
-                evaluationResultsPage.setAttribute('aria-hidden', !show);
                 evaluationResultsPage.classList.toggle('open', show);
                 if (show) {
                     evaluationResultsPage.setAttribute('tabindex', 0);
@@ -129,6 +128,7 @@ export default () => {
                     evaluationResultsPage.setAttribute('inert', true);
                     document.querySelectorAll('.inert').forEach(el => el.removeAttribute('inert'));
                 }
+                evaluationResultsPage.setAttribute('aria-hidden', !show);
                 menuBtn.setAttribute('aria-expanded', show);
                 menuBtn.setAttribute('aria-label', show ? 'Ocultar resumo dos testes de conformidade; pressionar a tecla Tab para ir para o resumo' : 'Mostrar resumo dos testes de conformidade');
                 menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
@@ -150,6 +150,31 @@ export default () => {
         menuEl.appendChild(menuItemResults);
         
         evaluationResultsPage.parentElement.insertBefore(menuContainer, evaluationResultsPage);
+
+        // Export HTML button
+        const menuItemExportHtml = document.createElement('li');
+        menuItemExportHtml.setAttribute('id', 'saveMenuItem');
+        menuItemExportHtml.classList.add('menu-entry-item', 'menu-entry-save');
+        menuItemExportHtml.setAttribute('role', 'menuitem');
+        menuItemExportHtml.innerHTML = `<svg fill="currentColor" width="100%" height="100%" role="presentation" version="1.1" viewBox="0 0 40 40" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><g><path fill-rule="evenodd" d="m 25.9515,16.5755 v 6.5 h -1 v -6.5 h -2 a 1.5,1.5 0 0 1 -1.5,-1.5 v -2 h -5.5 a 1,1 0 0 0 -1,1 v 9 h -1 v -9 a 2,2 0 0 1 2,-2 h 5.5 z m -9.736,7.35 v 3.999 h -0.791 v -1.714 h -1.683 v 1.714 h -0.79 v -3.999 h 0.791 v 1.626 h 1.682 v -1.626 h 0.79 z m 2.251,0.662 v 3.337 h -0.794 v -3.337 h -1.133 v -0.662 h 3.064 v 0.662 z m 2.176,3.337 v -2.66 h 0.038 l 0.952,2.159 h 0.516 l 0.946,-2.16 h 0.038 v 2.661 h 0.715 v -3.999 h -0.8 l -1.14,2.596 h -0.026 l -1.14,-2.596 h -0.805 v 3.999 z m 4.71,-0.674 h 1.696 v 0.674 h -2.487 v -3.999 h 0.79 v 3.325 z" /></g></svg>`;
+        menuItemExportHtml.tabIndex = 0;
+        menuItemExportHtml.setAttribute('aria-label', 'Exportar como HTML');
+        menuItemExportHtml.setAttribute('title', menuItemExportHtml.getAttribute('aria-label'));
+        menuItemExportHtml.addEventListener('click', e => {
+            e.preventDefault();
+            menuBtn.dispatchEvent(new Event('click'));
+            requestAnimationFrame(() => {
+                menuItemExportHtml.focus();
+            });
+            App.exportHtmlFile();
+        });
+        menuEl.appendChild(menuItemExportHtml);
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                menuItemExportHtml.dispatchEvent(new Event('click'));
+            }
+        });
 
         // Some trigonometry to position the menu item in the radial menu
         const PI = Math.PI;
@@ -182,12 +207,13 @@ export default () => {
             menuBtn.setAttribute('title', menuBtn.getAttribute('aria-label'));
             if (!!menu) {
                 menu.classList.toggle('open', show);
-                menu.setAttribute('aria-hidden', !show);
                 if (show) {
                     menu.removeAttribute('inert');
                 } else {
                     menu.setAttribute('inert', true);
+                    menuBtn.focus();
                 }
+                menu.setAttribute('aria-hidden', !show);
             }
 
             if (e.defaultPrevented && menuItemResults.getAttribute('aria-expanded') !== 'true') return; // Do nothing if event already handled

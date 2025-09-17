@@ -1,6 +1,6 @@
-import { TagName as TestGroup } from "./TestGroupComponent.js";
-import { TagName as TestInfo } from "./TestInfoComponent.js";
-import UpdateEvaluationResultsFactory from "./EvaluationResultsFactory.js";
+import { TagName as TestGroup } from "./TestGroupComponent-0.0.1.js";
+import { TagName as TestInfo } from "./TestInfoComponent-0.0.1.js";
+import UpdateEvaluationResultsFactory from "./EvaluationResultsFactory-0.0.1.js";
 
 export default (tests) =>{
     const checkList = document.getElementById('checklistTests');

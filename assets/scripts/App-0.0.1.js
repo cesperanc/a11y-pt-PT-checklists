@@ -1,7 +1,8 @@
-import Logo from "./Logo.js";
-import InputFields from "./InputFields.js";
-import AppMenu from "./AppMenu.js";
-import TestsLoader from "./TestsLoader.js";
+import Logo from "./Logo-0.0.1.js";
+import InputFields from "./InputFields-0.0.1.js";
+import AppMenu from "./AppMenu-0.0.1.js";
+import TestsLoader from "./TestsLoader-0.0.1.js";
+import ExportEvaluationResultsToHTML from "./ExportEvaluationResultsToHTML-0.0.1.js";
 
 //https://github.com/101arrowz/fflate/blob/master/docs/README.md
 //import * as fflate from 'https://cdn.skypack.dev/fflate?min';
@@ -170,6 +171,16 @@ class App {
         return [];
     }
 
+    static #download = (data, type='application/json', filename='CheckList.json')=>{
+        const downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = URL.createObjectURL(new Blob([data], { type: type }));
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+    };
+
     static saveFile() {
         const unsupportedFeatures = App.#getUnsupportedFeatures([
             'Blob',
@@ -187,24 +198,14 @@ class App {
             formData: App.getFormData(),
         });
 
-        const download = (data, type='application/json', filename='CheckList.json')=>{
-            const downloadLink = document.createElement("a");
-            downloadLink.download = filename;
-            downloadLink.href = URL.createObjectURL(new Blob([data], { type: type }));
-            downloadLink.style.display = "none";
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            downloadLink.remove();
-        };
-
         if(typeof fflate!=="undefined"){
             fflate.gzip(fflate.strToU8(data), { filename: 'CheckList.json', level: 6, mem: 8 }, (err, compressedData)=>{
                 if(err===null){
-                    download(compressedData, 'application/gzip', 'CheckList.gz');
+                    App.#download(compressedData, 'application/gzip', 'CheckList.gz');
                 }
             });
         }else{
-            download(data, 'application/json', 'CheckList.json');
+            App.#download(data, 'application/json', 'CheckList.json');
         }
     }
 
@@ -299,6 +300,21 @@ class App {
         openFile.style.display = "none";
         document.body.appendChild(openFile);
         openFile.click();
+    }
+
+    static async exportHtmlFile() {
+        const unsupportedFeatures = App.#getUnsupportedFeatures([
+            'Blob',
+            'URL',
+        ]);
+        if (unsupportedFeatures.length>0) {
+            alert(unsupportedFeatures.length>1?`Não é possível guardar o ficheiro porque as funcionalidades "${(unsupportedFeatures).join('", "')}" não são suportadas.`:`Não é possível guardar o ficheiro porque a funcionalidade "${(unsupportedFeatures).join('')}" não é suportada.`);
+            
+            return;
+        }
+
+        const data = await ExportEvaluationResultsToHTML(App.getTests()[App.getVersion()], App.getFormData(), 'Resultados dos testes de conformidade: '+document.title);
+        App.#download(data, 'text/html', 'TestResults.html');
     }
 
     static toast(message, role='alert'){

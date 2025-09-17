@@ -1,4 +1,4 @@
-import normalize from "./assets/scripts/Config.js";
+import normalize from "./assets/scripts/Config-0.0.1.js";
 
 const Config = normalize({
     '1.0': [
